@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "migrationUSMT", "migrationUSMT\migrationUSMT.csproj", "{60DC74E7-2389-4706-9B2D-D37ED5E227F7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{60DC74E7-2389-4706-9B2D-D37ED5E227F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60DC74E7-2389-4706-9B2D-D37ED5E227F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60DC74E7-2389-4706-9B2D-D37ED5E227F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60DC74E7-2389-4706-9B2D-D37ED5E227F7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A3ABEB1B-18C0-477F-AA41-E96C20BE6722}
+	EndGlobalSection
+EndGlobal
