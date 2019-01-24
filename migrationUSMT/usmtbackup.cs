@@ -21,6 +21,7 @@ namespace migrationUSMT
 {
     public partial class usmtbackup : Form
     {
+        String store = string.Empty;
         public usmtbackup()
         {
             InitializeComponent();
@@ -59,7 +60,7 @@ namespace migrationUSMT
                                             p\InstalledProgramsList.txt";*/
 
                     string DIR = "cd amd64";
-                    string scan = "./scanstate C:/VS /localonly /o /c /ue:* /i:MigUser.xml /i:MigApp.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt";
+                    string scan = "./scanstate " + store + " /localonly /o /c /ue:* /i:MigUser.xml /i:MigApp.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt";
                     foreach (var item in checkedListBox1.CheckedItems)
                     {
                         scan += @" /ui:TMCCADMN\" + item;
@@ -125,34 +126,24 @@ namespace migrationUSMT
 
         }
 
-
-        private bool IsFileLocked(FileInfo file)
+        private void backUpLocation_Click(object sender, EventArgs e)
         {
-            FileStream stream = null;
 
-            try
-            {
-                stream = file.Open(FileMode.Open, FileAccess.Read, FileShare.None);
-            }
-            catch (IOException)
-            {
-                //the file is unavailable because it is:
-                //still being written to
-                //or being processed by another thread
-                //or does not exist (has already been processed)
-                return true;
-            }
-            finally
-            {
-                if (stream != null)
-                    stream.Close();
-            }
+            FolderBrowserDialog browser = new FolderBrowserDialog();
 
-            //file is not locked
-            return false;
+
+            if (browser.ShowDialog() == DialogResult.OK)
+            {
+                store = browser.SelectedPath;
+                richTextBox2.Text = store;
+                
+            }
         }
 
+        private void richTextBox2_TextChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 
     

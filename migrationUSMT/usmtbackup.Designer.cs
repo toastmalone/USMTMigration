@@ -31,6 +31,8 @@
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
             this.button1 = new System.Windows.Forms.Button();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.backUpLocation = new System.Windows.Forms.Button();
+            this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // checkedListBox1
@@ -61,11 +63,32 @@
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
+            // backUpLocation
+            // 
+            this.backUpLocation.Location = new System.Drawing.Point(143, 307);
+            this.backUpLocation.Name = "backUpLocation";
+            this.backUpLocation.Size = new System.Drawing.Size(36, 23);
+            this.backUpLocation.TabIndex = 3;
+            this.backUpLocation.Text = "...";
+            this.backUpLocation.UseVisualStyleBackColor = true;
+            this.backUpLocation.Click += new System.EventHandler(this.backUpLocation_Click);
+            // 
+            // richTextBox2
+            // 
+            this.richTextBox2.Location = new System.Drawing.Point(12, 307);
+            this.richTextBox2.Name = "richTextBox2";
+            this.richTextBox2.Size = new System.Drawing.Size(125, 23);
+            this.richTextBox2.TabIndex = 4;
+            this.richTextBox2.Text = "";
+            this.richTextBox2.TextChanged += new System.EventHandler(this.richTextBox2_TextChanged);
+            // 
             // usmtbackup
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(690, 469);
+            this.Controls.Add(this.richTextBox2);
+            this.Controls.Add(this.backUpLocation);
             this.Controls.Add(this.richTextBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.checkedListBox1);
@@ -81,5 +104,7 @@
         private System.Windows.Forms.CheckedListBox checkedListBox1;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button backUpLocation;
+        private System.Windows.Forms.RichTextBox richTextBox2;
     }
 }
