@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Management.Automation;
+using System.Net;
 
 namespace migrationUSMT
 {
@@ -14,7 +16,8 @@ namespace migrationUSMT
     {
         public Form1()
         {
-            InitializeComponent();
+          
+                InitializeComponent();
         }
 
         private void button1_Click(object sender, EventArgs e)

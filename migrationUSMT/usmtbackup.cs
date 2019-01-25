@@ -13,18 +13,17 @@ using System.Threading;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace migrationUSMT
 {
     public partial class usmtbackup : Form
     {
+        
         String store = string.Empty;
         public usmtbackup()
         {
             InitializeComponent();
+            
             try
             {
                 DirectoryInfo directory = new DirectoryInfo(@"C:\Users");
@@ -54,10 +53,11 @@ namespace migrationUSMT
 
                     button1.Hide();
 
-                    string policy = "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Unrestricted; Get-ExecutionPolicy";
+                    string policyUnRestrict = "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Unrestricted; Get-ExecutionPolicy";
+                    string policyRestrict = "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Restricted; Get-ExecutionPolicy";
                     /*string programList = @"Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Se
-                                           lect - Object DisplayName, DisplayVersion, Publisher, InstallDate | Format - Table –AutoSize > C:\Users\administrator\Deskto
-                                            p\InstalledProgramsList.txt";*/
+                                       lect - Object DisplayName, DisplayVersion, Publisher, InstallDate | Format - Table –AutoSize > C:\Users\administrator\Deskto
+                                        p\InstalledProgramsList.txt";*/
 
                     string DIR = "cd amd64";
                     string scan = "./scanstate " + store + " /localonly /o /c /ue:* /i:MigUser.xml /i:MigApp.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt";
@@ -67,9 +67,10 @@ namespace migrationUSMT
                     }
                     Debug.WriteLine(scan);
 
-                    PS.AddScript(policy);
+                    PS.AddScript(policyUnRestrict);
                     PS.AddScript(DIR);
                     PS.AddScript(scan);
+                    PS.AddScript(policyRestrict);
 
                     IAsyncResult result = PS.BeginInvoke();
 
