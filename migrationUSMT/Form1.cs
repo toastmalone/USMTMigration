@@ -7,8 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Management.Automation;
-using System.Net;
+using System.IO;
+using System.Diagnostics;
 
 namespace migrationUSMT
 {
@@ -18,12 +18,15 @@ namespace migrationUSMT
         {
           
                 InitializeComponent();
+
+            this.FormClosing += Form_Closing;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             var doot = new usmtbackup();
             doot.Show();
+            this.Hide();
            
         }
 
@@ -31,6 +34,15 @@ namespace migrationUSMT
         {
             var restore = new usmtRestore();
             restore.Show();
+            this.Hide();
+        }
+
+        private void Form_Closing(object sender, FormClosingEventArgs e)
+        {
+            
+
+            
+
         }
     }
 }

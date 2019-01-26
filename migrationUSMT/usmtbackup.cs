@@ -13,6 +13,7 @@ using System.Threading;
 using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Diagnostics;
+using System.Net;
 
 namespace migrationUSMT
 {
@@ -23,12 +24,13 @@ namespace migrationUSMT
         public usmtbackup()
         {
             InitializeComponent();
-            
+            this.FormClosing += Form_Closing;
+
             try
             {
                 DirectoryInfo directory = new DirectoryInfo(@"C:\Users");
                 DirectoryInfo[] directories = directory.GetDirectories();
-
+                
                 foreach (DirectoryInfo folder in directories)
                     checkedListBox1.Items.Add(folder.Name);
             }
@@ -60,7 +62,7 @@ namespace migrationUSMT
                                         p\InstalledProgramsList.txt";*/
 
                     string DIR = "cd amd64";
-                    string scan = "./scanstate " + store + " /localonly /o /c /ue:* /i:MigUser.xml /i:MigApp.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt";
+                    string scan = "./scanstate " + store + " /localonly /c /ue:* /i:MigUser.xml /i:MigApp.xml /i:MigDocs.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt";
                     foreach (var item in checkedListBox1.CheckedItems)
                     {
                         scan += @" /ui:TMCCADMN\" + item;
@@ -108,24 +110,7 @@ namespace migrationUSMT
 
         }
 
-        private bool searchFile(String file, String searchText)
-        {
-            System.IO.StreamReader reader = new System.IO.StreamReader(file);
-
-            String text = reader.ReadToEnd();
-
-            if (System.Text.RegularExpressions.Regex.IsMatch(text, searchText))
-            {
-               
-                return true;
-            }
-            else
-            {
-               
-                return false;
-            }
-
-        }
+        
 
         private void backUpLocation_Click(object sender, EventArgs e)
         {
@@ -143,6 +128,30 @@ namespace migrationUSMT
 
         private void richTextBox2_TextChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void Form_Closing(object sender, FormClosingEventArgs e)
+        {
+            String _dir1 = @"use q: /delete";
+            String _dir2 = @"use w: /delete";
+            Process cmd = new Process();
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.StartInfo.FileName = "net.exe";
+            cmd.StartInfo.Arguments = _dir1;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+            cmd.WaitForExit();
+
+            cmd = new Process();
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.StartInfo.FileName = "net.exe";
+            cmd.StartInfo.Arguments = _dir2;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+            cmd.WaitForExit();
+
+            Application.ExitThread();
 
         }
     }

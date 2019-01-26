@@ -19,6 +19,7 @@ namespace migrationUSMT
         public usmtRestore()
         {
             InitializeComponent();
+            this.FormClosing += Form_Closing;
             migrate.Hide();
         }
 
@@ -94,6 +95,29 @@ namespace migrationUSMT
                     }
                 }
             
+        }
+        private void Form_Closing(object sender, FormClosingEventArgs e)
+        {
+            String _dir1 = @"use q: /delete";
+            String _dir2 = @"use w: /delete";
+            Process cmd = new Process();
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.StartInfo.FileName = "net.exe";
+            cmd.StartInfo.Arguments = _dir1;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+            cmd.WaitForExit();
+
+            cmd = new Process();
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.StartInfo.FileName = "net.exe";
+            cmd.StartInfo.Arguments = _dir2;
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+            cmd.WaitForExit();
+
+            Application.ExitThread();
+
         }
     }
 }
