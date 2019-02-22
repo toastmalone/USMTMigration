@@ -19,7 +19,7 @@ namespace migrationUSMT
           
                 InitializeComponent();
 
-            this.FormClosing += Form_Closing;
+            this.FormClosing += Form2.Form_Closing;
         }
 
         private void button1_Click(object sender, EventArgs e)

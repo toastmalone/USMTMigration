@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Management;
 using System.IO;
 using System.Threading;
-using System.Collections.ObjectModel;
 using System.Management.Automation;
 using System.Diagnostics;
-using System.Net;
+
 
 namespace migrationUSMT
 {
@@ -24,7 +15,7 @@ namespace migrationUSMT
         public usmtbackup()
         {
             InitializeComponent();
-            this.FormClosing += Form_Closing;
+            this.FormClosing += Form2.Form_Closing;
 
             try
             {
@@ -48,53 +39,69 @@ namespace migrationUSMT
 
         private void button1_Click(object sender, EventArgs e)
         {
+            button1.Hide();
 
             using (PowerShell PS = PowerShell.Create())
             {
                 string path = Directory.GetCurrentDirectory() + @"\amd64\prog.log";
+                string machineName = Environment.MachineName;
+                string date = DateTime.Today.ToString("yyyy-MM-dd");
+                string policyUnRestrict = "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Unrestricted; Get-ExecutionPolicy";
+                string policyRestrict = "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Restricted; Get-ExecutionPolicy";
 
-                    button1.Hide();
+                //TODO add program list generator that doesnt include all the extra junk
 
-                    string policyUnRestrict = "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Unrestricted; Get-ExecutionPolicy";
-                    string policyRestrict = "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Restricted; Get-ExecutionPolicy";
-                    /*string programList = @"Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Se
-                                       lect - Object DisplayName, DisplayVersion, Publisher, InstallDate | Format - Table –AutoSize > C:\Users\administrator\Deskto
-                                        p\InstalledProgramsList.txt";*/
+                /*string programList = @"Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Se
+                                    lect - Object DisplayName, DisplayVersion, Publisher, InstallDate | Format - Table –AutoSize > C:\Users\administrator\Deskto
+                                    p\InstalledProgramsList.txt";*/
+                    
+                string DIR = "cd amd64";
+                    
+                //string scan = "./scanstate " + store + @"\\" +  machineName + "_" + date + " " + "/localonly /c /ue:* /i:MigUser.xml /i:MigApp.xml /i:MigDocs.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt";
+                string scan = String.Format(@"./scanstate {0}\\{1}_{2} /localonly /c /ue:* /i:MigUser.xml /i:MigApp.xml /i:MigApp.xml /i:MigDocs.xml /i:MigDocs.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt"
+                                            , store, machineName, date);
 
-                    string DIR = "cd amd64";
-                    string scan = "./scanstate " + store + " /localonly /c /ue:* /i:MigUser.xml /i:MigApp.xml /i:MigDocs.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt";
-                    foreach (var item in checkedListBox1.CheckedItems)
-                    {
-                        scan += @" /ui:TMCCADMN\" + item;
-                    }
-                    Debug.WriteLine(scan);
+                foreach (var item in checkedListBox1.CheckedItems)
+                {
+                    scan += @" /ui:TMCCADMN\" + item;
+                }
 
-                    PS.AddScript(policyUnRestrict);
-                    PS.AddScript(DIR);
-                    PS.AddScript(scan);
-                    PS.AddScript(policyRestrict);
 
-                    IAsyncResult result = PS.BeginInvoke();
+                PS.AddScript(policyUnRestrict); //allows scripts to be run in powershell
+                PS.AddScript(DIR); // move to the directory where the usmt files are stored
+                PS.AddScript(scan); // runs the scan command with provided inputs
+                PS.AddScript(policyRestrict); // restrics powershell again
 
-                    while (result.IsCompleted == false)
-                    {
-                        richTextBox1.Text = "migrating.";
-                        Application.DoEvents();
-                        Thread.Sleep(500);
-                        richTextBox1.Text = "migrating..";
-                        Application.DoEvents();
-                        Thread.Sleep(500);
-                        richTextBox1.Text = "migrating...";
-                        Application.DoEvents();
-                        Thread.Sleep(500);
-                        Application.DoEvents();
-                        richTextBox1.Text = "migrating....";
-                        Application.DoEvents();
+                //PSDataCollection<VerboseRecord> records = new PSDataCollection<VerboseRecord>();
+                //IAsyncResult result = PS.BeginInvoke<PSObject, VerboseRecord>(null, records); // async will allow 
+
+                IAsyncResult result = PS.BeginInvoke();
+
+                //checks to see if the powershell script is complete
+                //on completion brings button back and prints log info
+                //TODO add streaming output from prog.log and a progress bar this is a temporary solution
+                while (result.IsCompleted == false)
+                {
+                    //var stream = PS.Streams.Verbose;
+                    
+                    richTextBox1.Text = "migrating.";
+                    Application.DoEvents();
+                    Thread.Sleep(500);
+                    richTextBox1.Text = "migrating..";
+                    Application.DoEvents();
+                    Thread.Sleep(500);
+                    richTextBox1.Text = "migrating...";
+                    Application.DoEvents();
+                    Thread.Sleep(500);
+                    Application.DoEvents();
+                    richTextBox1.Text = "migrating....";
+                    Application.DoEvents();
                 }
 
                 if (result.IsCompleted == true)
                 {
                     richTextBox1.Text = File.ReadAllText(path);
+                    button1.Show();
                 }
             }
 
@@ -111,7 +118,7 @@ namespace migrationUSMT
         }
 
         
-
+        // Opens a directory browser to pick a store location for the .MIG file 
         private void backUpLocation_Click(object sender, EventArgs e)
         {
 
@@ -131,29 +138,6 @@ namespace migrationUSMT
 
         }
 
-        private void Form_Closing(object sender, FormClosingEventArgs e)
-        {
-            String _dir1 = @"use q: /delete";
-            String _dir2 = @"use w: /delete";
-            Process cmd = new Process();
-            cmd.StartInfo.CreateNoWindow = true;
-            cmd.StartInfo.FileName = "net.exe";
-            cmd.StartInfo.Arguments = _dir1;
-            cmd.StartInfo.UseShellExecute = false;
-            cmd.Start();
-            cmd.WaitForExit();
-
-            cmd = new Process();
-            cmd.StartInfo.CreateNoWindow = true;
-            cmd.StartInfo.FileName = "net.exe";
-            cmd.StartInfo.Arguments = _dir2;
-            cmd.StartInfo.UseShellExecute = false;
-            cmd.Start();
-            cmd.WaitForExit();
-
-            Application.ExitThread();
-
-        }
     }
 
     

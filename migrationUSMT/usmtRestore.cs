@@ -19,7 +19,7 @@ namespace migrationUSMT
         public usmtRestore()
         {
             InitializeComponent();
-            this.FormClosing += Form_Closing;
+            this.FormClosing += Form2.Form_Closing;
             migrate.Hide();
         }
 
@@ -49,75 +49,44 @@ namespace migrationUSMT
 
         private void migrate_Click(object sender, EventArgs e)
         {
-            
-            
-                using (PowerShell PS = PowerShell.Create())
+            migrate.Hide();
+
+            using (PowerShell PS = PowerShell.Create())
+            {
+                string path = Directory.GetCurrentDirectory() + @"\amd64\prog.log";
+                string policy = "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Unrestricted; Get-ExecutionPolicy";
+                string DIR = "cd amd64";
+                string scan = String.Format("./loadstate {0} /c /i:MigUser.xml /i:MigApp.xml /v:13 /progress:prog.log", 0);
+
+                PS.AddScript(policy); // allows scripts to be ran in powershell
+                PS.AddScript(DIR); // changes directory to usmt 
+                PS.AddScript(scan);
+
+                IAsyncResult result = PS.BeginInvoke();
+
+                while (result.IsCompleted == false)
                 {
-                    string path = Directory.GetCurrentDirectory() + @"\amd64\prog.log";
-
-                    migrate.Hide();
-
-                    string policy = "Set-ExecutionPolicy -Scope Process -ExecutionPolicy Unrestricted; Get-ExecutionPolicy";
-                    /*string programList = @"Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Se
-                                           lect - Object DisplayName, DisplayVersion, Publisher, InstallDate | Format - Table –AutoSize > C:\Users\administrator\Deskto
-                                            p\InstalledProgramsList.txt";*/
-
-                    string DIR = "cd amd64";
-                    string scan = "./loadstate " + store + " /c /i:MigUser.xml /i:MigApp.xml /v:13 /progress:prog.log";
-
-                    Debug.WriteLine(scan);
-
-                    PS.AddScript(policy);
-                    PS.AddScript(DIR);
-                    PS.AddScript(scan);
-
-                    IAsyncResult result = PS.BeginInvoke();
-
-                    while (result.IsCompleted == false)
-                    {
-                        richTextBox1.Text = "migrating.";
-                        Application.DoEvents();
-                        Thread.Sleep(500);
-                        richTextBox1.Text = "migrating..";
-                        Application.DoEvents();
-                        Thread.Sleep(500);
-                        richTextBox1.Text = "migrating...";
-                        Application.DoEvents();
-                        Thread.Sleep(500);
-                        Application.DoEvents();
-                        richTextBox1.Text = "migrating....";
-                        Application.DoEvents();
-                    }
-
-                    if (result.IsCompleted == true)
-                    {
-                        richTextBox1.Text = File.ReadAllText(path);
-                    }
+                    richTextBox1.Text = "migrating.";
+                    Application.DoEvents();
+                    Thread.Sleep(500);
+                    richTextBox1.Text = "migrating..";
+                    Application.DoEvents();
+                    Thread.Sleep(500);
+                    richTextBox1.Text = "migrating...";
+                    Application.DoEvents();
+                    Thread.Sleep(500);
+                    Application.DoEvents();
+                    richTextBox1.Text = "migrating....";
+                    Application.DoEvents();
                 }
+
+                if (result.IsCompleted == true)
+                {
+                    richTextBox1.Text = File.ReadAllText(path);
+                }
+            }
             
         }
-        private void Form_Closing(object sender, FormClosingEventArgs e)
-        {
-            String _dir1 = @"use q: /delete";
-            String _dir2 = @"use w: /delete";
-            Process cmd = new Process();
-            cmd.StartInfo.CreateNoWindow = true;
-            cmd.StartInfo.FileName = "net.exe";
-            cmd.StartInfo.Arguments = _dir1;
-            cmd.StartInfo.UseShellExecute = false;
-            cmd.Start();
-            cmd.WaitForExit();
-
-            cmd = new Process();
-            cmd.StartInfo.CreateNoWindow = true;
-            cmd.StartInfo.FileName = "net.exe";
-            cmd.StartInfo.Arguments = _dir2;
-            cmd.StartInfo.UseShellExecute = false;
-            cmd.Start();
-            cmd.WaitForExit();
-
-            Application.ExitThread();
-
-        }
+        
     }
 }
