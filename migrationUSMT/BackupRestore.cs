@@ -12,19 +12,19 @@ using System.Diagnostics;
 
 namespace migrationUSMT
 {
-    public partial class Form1 : Form
+    public partial class BackupRestore : Form
     {
-        public Form1()
+        public BackupRestore()
         {
           
                 InitializeComponent();
 
-            this.FormClosing += Form2.Form_Closing;
+            this.FormClosing += Main.Form_Closing;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var doot = new usmtbackup();
+            var doot = new USMTBackup();
             doot.Show();
             this.Hide();
            
@@ -32,7 +32,7 @@ namespace migrationUSMT
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var restore = new usmtRestore();
+            var restore = new USMTRestore();
             restore.Show();
             this.Hide();
         }

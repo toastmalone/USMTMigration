@@ -56,37 +56,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="BackupRestore.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="BackupRestore.Designer.cs">
+      <DependentUpon>BackupRestore.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
+    <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+      <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="usmtbackup.cs">
+    <Compile Include="USMTBackup.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="usmtbackup.Designer.cs">
-      <DependentUpon>usmtbackup.cs</DependentUpon>
+    <Compile Include="USMTBackup.Designer.cs">
+      <DependentUpon>USMTBackup.cs</DependentUpon>
     </Compile>
-    <Compile Include="usmtRestore.cs">
+    <Compile Include="USMTRestore.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="usmtRestore.Designer.cs">
-      <DependentUpon>usmtRestore.cs</DependentUpon>
+    <Compile Include="USMTRestore.Designer.cs">
+      <DependentUpon>USMTRestore.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="BackupRestore.resx">
+      <DependentUpon>BackupRestore.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
+      <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -97,11 +97,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="usmtbackup.resx">
-      <DependentUpon>usmtbackup.cs</DependentUpon>
+    <EmbeddedResource Include="USMTBackup.resx">
+      <DependentUpon>USMTBackup.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="usmtRestore.resx">
-      <DependentUpon>usmtRestore.cs</DependentUpon>
+    <EmbeddedResource Include="USMTRestore.resx">
+      <DependentUpon>USMTRestore.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

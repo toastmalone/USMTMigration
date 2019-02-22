@@ -13,13 +13,13 @@ using System.Management;
 using System.IO;
 namespace migrationUSMT
 {
-    public partial class usmtRestore : Form
+    public partial class USMTRestore : Form
     {
         String store = string.Empty;
-        public usmtRestore()
+        public USMTRestore()
         {
             InitializeComponent();
-            this.FormClosing += Form2.Form_Closing;
+            this.FormClosing += Main.Form_Closing;
             migrate.Hide();
         }
 

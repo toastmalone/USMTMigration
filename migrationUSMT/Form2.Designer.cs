@@ -1,6 +1,6 @@
 ﻿namespace migrationUSMT
 {
-    partial class Form2
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -63,7 +63,7 @@
             this.password.Text = "password";
             this.password.TextChanged += new System.EventHandler(this.password_TextChanged);
             // 
-            // Form2
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -71,8 +71,8 @@
             this.Controls.Add(this.password);
             this.Controls.Add(this.userName);
             this.Controls.Add(this.buttonLogin);
-            this.Name = "Form2";
-            this.Text = "Form2";
+            this.Name = "Main";
+            this.Text = "Main";
             this.ResumeLayout(false);
             this.PerformLayout();
 

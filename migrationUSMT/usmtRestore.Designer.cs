@@ -1,6 +1,6 @@
 ﻿namespace migrationUSMT
 {
-    partial class usmtRestore
+    partial class USMTRestore
     {
         /// <summary>
         /// Required designer variable.

@@ -8,14 +8,14 @@ using System.Diagnostics;
 
 namespace migrationUSMT
 {
-    public partial class usmtbackup : Form
+    public partial class USMTBackup : Form
     {
         
         String store = string.Empty;
-        public usmtbackup()
+        public USMTBackup()
         {
             InitializeComponent();
-            this.FormClosing += Form2.Form_Closing;
+            this.FormClosing += Main.Form_Closing;
 
             try
             {
@@ -60,7 +60,7 @@ namespace migrationUSMT
                 //string scan = "./scanstate " + store + @"\\" +  machineName + "_" + date + " " + "/localonly /c /ue:* /i:MigUser.xml /i:MigApp.xml /i:MigDocs.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt";
                 string scan = String.Format(@"./scanstate {0}\\{1}_{2} /localonly /c /ue:* /i:MigUser.xml /i:MigApp.xml /i:MigApp.xml /i:MigDocs.xml /i:MigDocs.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt"
                                             , store, machineName, date);
-
+                
                 foreach (var item in checkedListBox1.CheckedItems)
                 {
                     scan += @" /ui:TMCCADMN\" + item;

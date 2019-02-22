@@ -12,14 +12,14 @@ using System.Diagnostics;
 
 namespace migrationUSMT
 {
-    public partial class Form2 : Form
+    public partial class Main : Form
     {
         private string _username;
         private string _password;
         private string[] _directory = { @"\\dr-main.tmccadmn.tmcc.edu\sam$", @"\\dr-storage.tmccadmn.tmcc.edu\images" };
         public char[] _letter = { 'q', 'w' };
 
-        public Form2()
+        public Main()
         {
             InitializeComponent();
             this.FormClosing += Form_Closing;
@@ -79,7 +79,7 @@ namespace migrationUSMT
                 if (result == System.Windows.Forms.DialogResult.Ignore)
                 {
                     this.Hide();
-                    Form1 window = new Form1();
+                    BackupRestore window = new BackupRestore();
                     window.Show();
                 }
             }
@@ -87,7 +87,7 @@ namespace migrationUSMT
             {
                 //successfully connected to network drives so opens next window
                 this.Hide();
-                Form1 window = new Form1();
+                BackupRestore window = new BackupRestore();
                 window.Show();
             }
         }

@@ -1,6 +1,6 @@
 ﻿namespace migrationUSMT
 {
-    partial class Form1
+    partial class BackupRestore
     {
         /// <summary>
         /// Required designer variable.
