@@ -1,0 +1,70 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="dfsrdev"
+    buildFilter=""
+    company="Microsoft Corp"
+    copyright="Microsoft"
+    creationTimeStamp="2004-05-24T17:39:48.5440428-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2005-05-10T17:21:13.088724Z"
+    manifestVersion="1.0"
+    owners="dfsrdev"
+    supportInformation="dfsrdev"
+    testers="dfsrtst"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="*"
+      name="Microsoft-Windows-DFSR-Core-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!-- In-place section. Declarations here will not be migrated pc-to-pc. -->
+    <!-- Begin migration to W2K8 from non-Vista Server OS -->
+    <registerSDF name="DFSR-Infrastructure-ServerEdition"/>
+    <migXml xmlns="">
+      <!-- Ruleset for migrating R2 -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\DFSR")</condition>
+        </detect>
+      </detects>
+    </migXml>
+    <machineSpecific>
+      <migXml xmlns="">
+        <!-- Ruleset for migrating R2 -->
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\DFSR")</condition>
+          </detect>
+        </detects>
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DFSR\Parameters\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DFSR\Access Checks\* [*]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DFSR [Start]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\DFSR [DependOnService]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <!-- No pc-to-pc migration. -->
+  </migration>
+</assembly>

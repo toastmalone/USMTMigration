@@ -1,0 +1,90 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="ritwikt"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2004-03-19T02:52:19.9797224-08:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2004-08-12T16:56:22.5489237-07:00"
+    manifestVersion="1.0"
+    owners="ritwikt"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="*"
+      name="Microsoft-Windows-Telnet-Server-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!--Declare for which Longhorn equivalent OC this manifest corresponds too -->
+    <registerSDF name="TelnetServer"/>
+    <migXml xmlns="">
+      <!-- As per mig rule, the detects section should be directly under migXml to enable them 
+    execute to determine whether the component is installed or not. -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\TelnetServer\1.0")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT","6.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <!-- Collect this file on Longhorn systems -->
+        <rules>
+          <detects>
+            <detect>
+              <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\TelnetServer\1.0")</condition>
+            </detect>
+            <detect>
+              <condition>MigXmlHelper.IsOSEarlierThan("NT","6.0.0")</condition>
+            </detect>
+          </detects>
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [MaxConnections]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [TelnetPort]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [DefaultShell]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [ListenToSpecificIpAddr]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [SwitchToKeepShellRunning]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [SwitchForOneTimeUseOfShell]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [DefaultDomain]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [Shell]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [AllowTrustedDomain]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [MaxFailedLogins]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [SecurityMechanism]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [EventLoggingEnabled]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [LogNonAdminAttempts]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [LogAdminAttempts]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [LogFailures]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [AltKeyMapping]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [IdleSessionTimeOut]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [IdleSessionTimeOutBkup]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [DisconnectKillAllApps]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [ModeOfOperation]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [UpdatedTo]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [UpdatedTo]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [LogToFile]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [LoginScript]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [LogFile]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0 [LogFileSize]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\TelnetServer\1.0\ReadConfig [Defaults]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\TlntSvr  [Start]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

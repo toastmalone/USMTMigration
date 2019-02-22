@@ -1,0 +1,53 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-MediaServer-Migration-DL"
+      processorArchitecture="neutral"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!-- Corresponding Longhorn Component -->
+    <registerSDF name="MediaServer"/>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("File","%windir%\system32\Windows Media\Server [WMSServer.dll]")</condition>
+        </detect>
+      </detects>
+    </migXml>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows Media\Server\* [*]</pattern>
+              <pattern type="File">%windir%\system32\Windows Media\Server [ServerNamespace.xml]</pattern>
+              <pattern type="File">%windir%\system32\Windows Media\Server [NamespaceDelta.xml]</pattern>
+              <pattern type="File">%windir%\system32\Windows Media\Server [RemoteNamespaceDelta.xml]</pattern>
+            </objectSet>
+          </include>
+          <!-- exclude MMS related plugins -->
+          <exclude>
+            <objectSet>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows Media\Server\RegisteredPlugins\Control Protocol\{ADA10AB0-6236-11d2-BAB7-006097D2898E} [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows Media\Server\RegisteredPlugins\Data Protocol\{F9C5DF0E-58CC-11D2-BEE0-0060082F2054} [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows Media\Server\RegisteredPlugins\Feedback Protocol\{029ad021-cad9-11d3-aebe-00a0c95ec3f0} [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Windows Media\Server\Namespace\Storage\* [*]</pattern>
+            </objectSet>
+          </exclude>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

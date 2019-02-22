@@ -1,0 +1,57 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="lgolding"
+    buildFilter=""
+    company="Microsoft"
+    copyright="Copyright (C) Microsoft Corporation. All rights reserved."
+    creationTimeStamp="2006-08-18T08:30:00.0000000-07:00"
+    description=""
+    displayName="Windows Color System color profiles down-level migration manifest"
+    lastUpdateTimeStamp="2005-08-28T16:30:00.0000000Z"
+    manifestVersion="1.0"
+    owners="lgolding"
+    supportInformation=""
+    testers="apresley"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-ICM-Profiles-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <migXml xmlns="">
+      <!-- This is only valid for down-level OS (before Windows Vista). -->
+      <detects>
+        <detect>
+          <condition negation="Yes">MigXmlHelper.IsOSLaterThan("NT", "6.0")</condition>
+        </detect>
+      </detects>
+      <environment>
+        <variable name="WindowsColorSystem.ColorDir">
+          <text>%windir%\system32\spool\drivers\color</text>
+        </variable>
+      </environment>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%WindowsColorSystem.ColorDir%\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ICM\RegisteredProfiles [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <!-- Don't migrate the standard system profile. It will already be on the
+                 target system, and if we are doing a version-to-version upgrade, the
+                 the newer OS might have an improved version of this file. -->
+            <pattern type="File">%WindowsColorSystem.ColorDir% [sRGB Color Space Profile.icm]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Additional_Options\Windows_Core_Settings</migrationDisplayID>
+  </migration>
+</assembly>

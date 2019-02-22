@@ -1,0 +1,263 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="manojp"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2004-10-04T03:41:23.1615523+05:30"
+    description=""
+    displayName="$(resourceString.displayName0)"
+    lastUpdateTimeStamp="2004-10-20T04:41:05.8977061+05:30"
+    manifestVersion="1.0"
+    owners="manojp"
+    supportInformation=""
+    testers="vsood"
+    >
+  <assemblyIdentity
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-WSRM-Service-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <registerSDF name="WSRM"/>
+    <migXml xmlns="">
+      <!-- Collect these files on WIN2K3 systems -->
+      <detects>
+        <!-- Get only Windows 2003 and its SPs -->
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.IsOSLaterThan("NT","5.2.0.0")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SYSTEM\CurrentControlSet\Services\WSRM")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="File">%windir%\system32\windows system resource manager\Data [*.xml]</pattern>
+            <pattern type="File">%windir%\system32\windows system resource manager\Backup [*.xml]</pattern>
+            <pattern type="File">%windir%\system32\windows system resource manager\JetDB [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WSRM\Parameters [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WSRM\Parameters [SystemExclusionList]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WSRM\Parameters [ActivePolicy]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WSRM\Parameters [CalendarDefault]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WSRM\Performance [*]</pattern>
+            <!-- These are the entries removed from old snapin in GAC -->
+            <pattern type="File">%windir%\assembly\GAC\WSRMLib\* [*]</pattern>
+            <pattern type="File">%windir%\assembly\GAC\WSRMSnapin\* [*]</pattern>
+            <pattern type="File">%windir%\assembly\GAC\WSRMSnapin.Resources\* [*]</pattern>
+            <pattern type="File">%windir%\assembly\GAC\SysMonitor\1.2.724.1__31bf3856ad364e35\* [*]</pattern>
+            <!-- These are the entries removed from old snap-in wsrmlib.dll -->
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{E8BCFFAC-B864-4574-B2E8-F1FB21DFDC18}\InprocServer32\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{1F6E307F-716E-368A-B0B3-2DCA85F39EF5}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{255B3C52-61E1-343F-AF29-3846C2C8EE26}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{4E322354-4CEB-3825-8F48-0F4BE8D033DD}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{7E361E93-31C8-3E73-8AB9-A09029112463}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{80F68885-129C-3F0B-A816-388D80D6CCAE}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{81CE79BD-6C88-3713-BAB0-E284D942B845}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{98AB1586-AAA9-37A3-BC6E-BBAC98DBCDC7}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{A958C574-8DF1-3056-81DB-23EF2D0852B4}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{B287F1D1-92A5-3F26-8507-FDC2CE4C5B63}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{CC2B607C-7F06-32EB-8D7F-3ECEB63D54BF}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{D8FB1F20-E3B1-3C1C-8A41-48BD98A4AFA3}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{FD025729-24F5-3BE6-B5F2-23D3F2A70D7C}\1.2.724.1\* [*]</pattern>
+            <!-- These are the entries removed from old snap-in wsrmsnapin.dll -->
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Microsoft.WindowsResourceManager\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{058152EC-722D-330A-92D3-1D6B4DABCE19}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{0606DDD8-0290-39E6-AB48-53193ADD19C0}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{08AB1DE4-3F71-3397-970B-21A71343AA2A}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{0B54CFD7-6783-3CDA-B971-A1262A6F8691}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{0CDB4E5D-62F4-36C8-9B1A-7F387AA984CD}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{0DABC243-E789-35C4-AF42-E19CFD67B1FF}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{0FCB7D52-A0C8-4E30-A330-64C2F06BCAD7}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{10D70A50-5079-31A3-99F0-72CE93A03E02}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{13768617-AF13-32AC-A841-723273294B18}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{1518F648-FB00-3325-A9AA-7BF54FA81232}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{1960ED5B-7FB6-34D2-8130-6652FC9B4BE4}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{198D4507-43FF-3CFC-B79A-53FBB4057EF6}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{19D114B9-CA82-35A3-9E36-9E88AF627D96}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{1A287060-FE83-3E5B-87D4-9C763C01B615}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{1B231F8B-2954-391E-A9D7-45D7EBFCE7BD}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{20C403D5-E21B-3A4A-8B8D-2639729E6F08}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{23C553AF-C80B-32FF-97FA-0D091E1C1BC9}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{2670DFB8-D316-3D15-9B08-255FA40105E5}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{294F0704-C325-30CD-8481-A9B0E6D5F7FB}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{2E5A6231-339D-370A-A29A-D0A1C859B5A9}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{2E691E93-E0BD-3D10-BC61-C9E09DF0D416}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{2F6E4496-37F0-398D-9429-5D4828C5A1E3}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{317E2E91-3C08-3AA4-AD68-435445211AAB}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{3252C3B2-8A15-3A7C-8597-0CCB318A5EA7}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{34965134-8865-30C0-88FB-8BC0370AC85A}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{34D3C759-932C-3A1D-888D-85C97C41A3D9}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{34ED63E2-24DF-330E-9FFA-3D25B2C67477}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{35686AA0-F065-37FA-AE8D-1573DB69AC60}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{35ABBE2A-D7F0-3E5E-9788-2C68D12DC795}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{368F39DC-2F1B-3AB6-863B-AC4EE5EB8CA5}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{36C237BC-E6EB-3377-9931-FE55F5DFD1C6}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{37713A5C-36A6-3F3D-81E5-DD5AB9A811D5}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{3888C15A-F824-34AD-BDD3-FD6FBF4AD084}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{38D505FB-DEC2-34A5-9144-D3FB328131D6}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{3D996FDD-064C-3573-991A-2173C5AFA74B}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{3E32E442-0D41-3AE3-8EAA-DE62B79FBD12}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{43DE6398-F83A-3528-8441-B5A7FD57DA47}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{441BFFDC-F76D-3387-BE05-6B920F285A79}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{4486CF7F-E0FC-3F2E-95C2-82F7AF50579F}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{451543E3-C70E-3379-8F29-B0D907CA53B7}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{474436D7-5DAC-39F2-A549-84D7661E9AA0}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{48E44B33-C9D9-307C-9945-7AF1ACA15AC4}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{4C8B67D5-1EBE-3FB5-BE49-75E68B6E4858}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{50D3FE94-355F-333B-AAF9-09EFBA130FA6}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{5A33D7D6-4C20-3FF6-A3EE-7188EBE139D6}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{5E5B854B-12AC-32D8-8845-533CB6BD206F}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{5F28A9B1-3037-3CCE-A21B-3199465D73F8}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{6279CD7E-CBD8-37EE-8540-CBAFFBA3294B}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{642FD6D0-2DCC-39C6-86D9-AC5E678985C2}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{656C4793-B3F5-399F-97C6-0B1E3341783B}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{661AE5F5-4F07-32C2-9A54-36D09AC22FA6}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{68A891F9-C99B-3108-B6E8-068C5B6670C1}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{6B142839-BB07-3C7E-AED3-163B8FB65974}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{6CE71E8E-00D1-31EB-90D9-FF1A2AC680EE}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{6D8C0D5A-20EA-38FD-8BA7-D47ACBBCEC79}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{71B1ADAE-82E8-3395-94A3-5F395733D3B2}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{71C0C247-47A9-3111-844C-58F84897BABF}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{73AE4A88-9D50-32BA-B76C-232D8EA95A95}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{74F4D573-5313-32BC-A58A-4BEBEE70DA0E}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{75B48412-BD7E-3F77-9B5A-526C54A51514}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{75F8C21D-B878-338F-BCD2-987116878A97}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{7820C0D3-7C25-3078-9245-C9CBC093F488}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{78F9CEE7-7C8B-378B-9592-3D5EDA11EE56}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{7A1AECFA-158C-322B-A318-49482574A987}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{7BEDD791-F0AF-33D0-A18B-39FFA2BFAF3F}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{7CC811D2-64A0-3A57-9F16-5F38E0FAEE3F}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{7D5C7AD0-FEB5-3A4F-91F3-7351540D8A9E}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{80DBCEE1-A2BA-3721-ACE9-59C34311A023}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{8152CC69-0816-39BC-8D0E-0DB2653BF931}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{87A837D3-6C7B-3BCA-BA32-498681AAA7C3}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{896CFF11-E709-347F-8875-F4EE167FD8E9}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{8BBC1976-814F-3035-AF78-641B73A83A58}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{8CB46E78-1EB8-398F-BFFB-A3E339D87C77}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{91A5A617-0E0B-33D8-948B-CF1CDB6C9A9E}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{93B776CB-4B7A-3281-91EB-ACCA88F4C06E}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{93EE7D71-1ABF-38ED-8170-E120B9F8BB27}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{98075677-0392-33ED-8DB7-6DE0BF3D9631}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{9BEEB4AA-3C60-315E-BC1A-AAC6BE661BB8}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{9E4A8CDE-2AA9-3909-BE17-C7D29B11CE71}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{A13B48D7-2B65-4203-8901-B9F9855DE5C8}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{A27A6075-96C4-3704-AD8C-34B6BD259059}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{A5419BFC-8A39-3D0D-8D78-D7A8F7085BC7}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{A59CD897-E844-3440-93C1-D39500E8A8B5}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{A5A722BA-6B5C-35FF-87E4-271C5F597175}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{A5D134E1-1E59-3D99-A8D0-6563B6E1A77F}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{A75C878E-E437-3D03-BDF9-D667E580EB11}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{A833AC5D-DBFF-3D53-92CA-2B68785826B0}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{A901AB64-247C-348C-844A-08F597AC07D2}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{AD82B719-0AC4-3A21-A153-C7F322287388}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{AEE0D879-E8D4-3210-A388-E4665FB120C4}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{AEE6822C-292C-3080-A17F-3CDDF182F81F}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{AFF4D12E-1E6F-3410-8848-FFBAE96552BB}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{B08A8167-8F70-3554-A0AD-D4F9DB9EE941}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{B1556884-5275-3A92-82F5-7078951E47C6}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{B3D515F1-BCA6-32EF-B80B-944A3EF0D6C6}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{B942F430-8829-3442-B891-29A3A09167E1}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{BD4D84F1-1FE6-3BD9-9154-31AB12024B4D}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{BF1A5F36-E482-33F9-AF0E-EA7DF9212A64}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{BF1E169A-F2CE-3C32-BA49-25F40C36D821}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{BFFBFF8B-F7DE-3978-A595-5F5C6391AB49}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{C08BCEBD-1D44-3909-87E2-A77A497D0BCE}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{C08BDD65-237D-395C-9AAD-2671AA0DC79F}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{C0CEEF53-426B-37EC-9BFE-5A8D7D0CEDA6}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{C29A0D80-BE9A-3BEB-B41D-8CF8E7A8D3FF}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{C3B9B2D0-6C8B-3F35-A458-DE3C20DC70C2}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{C52753E0-E570-3201-9E0A-A924389561CE}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{C5456BB0-FA78-33A5-8CC8-53139E83A219}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{C62C093D-9BE3-3352-897D-7D41C33E6C54}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{C9915347-77D0-3C79-B8D5-5BE0B8ABC6A9}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{CC217398-75D2-3F58-BE1F-41780B110E0B}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{CC5D2C91-7DDB-3163-94D1-158995AEAFEC}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{D0499452-75D8-4EC0-9A21-A810840AFA69}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{D0A046BA-B39C-3F7A-B956-11BBFF3B61DE}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{D11195E1-4870-3F3F-AB8C-173616359EC6}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{D5289FF9-2B87-36BA-B96D-8FD86F8EB0C6}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{D550014C-42F8-3231-A7AC-4057EA35F318}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{DC401940-733C-31B2-B21D-D08EAD157BB8}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{DD7C9EB4-6999-3C32-BD75-99B4BC06EEA1}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{DE35C512-139C-3561-B8A4-D00314D6734D}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{DE986687-E58B-39D1-90E8-744CB81C4827}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{E2D3BAC6-ABB0-38C8-9FCE-040EAEDA0BE3}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{E60902B9-1BA2-3C60-80D2-AB19395AEB31}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{E66753E9-B030-3F8C-9F73-008CA2A3E61D}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{E6D7D407-DA7B-3CD1-80B2-7EEDE2115CBB}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{EC034AEE-3014-376A-9A42-0F476296E8C9}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{F2DC2C6C-3FCA-3548-8F79-2AA2342C3436}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{FDE4119C-B3A7-3CD8-B41F-F415B961D58C}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{FF50846A-060A-3B7A-A475-49C99BC7C579}\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{02F6C5F1-7B6C-3FCE-A661-3561FF62865A}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{0C6A80A1-9D98-3349-B0E6-4F96E0AF9CCA}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{0F3B88F0-DA26-3D3F-BDF5-B375EDFEAEF2}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{17DAED73-BA2E-3256-8550-1A772418A421}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{1D3B0E14-9F54-3AE5-B691-7E2EE863BEFA}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{280C4EF6-004E-3349-BC77-2853A75DD0AF}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{2E8FD368-795C-37E1-9736-48A3C65E754F}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{301CE6C3-E646-3664-9521-A52B4EB701A6}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{30A02625-0591-3711-8A75-708182D321D4}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{3768A1E3-1806-3633-9653-AED91756BA7B}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{40433045-2F46-32F9-B0E8-2246400FFCE2}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{4A3548B8-F8E8-3ABA-B906-9882D042F058}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{4DEF0149-0834-3A2B-99B9-676F42C34053}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{52A9901C-F2C0-3803-9FDD-77E302D0524C}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{574D163A-4406-34E2-ADB3-E6BE0D787946}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{5750CB6E-3C9C-3495-987A-FD515AA3A352}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{579CE704-3E5F-3DBF-AD42-A22C67F40CB8}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{5B7EB61D-BC51-3499-93A2-C4105C4F1250}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{5CE65AB3-2D7A-3422-A2A5-5DA5686689CB}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{62CE0E80-60BE-34C7-97E7-E7E94F2DB668}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{64654B4A-3319-3342-B800-FC46549A4F09}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{64DF2390-3E7A-3478-B511-75FFCC9A0FA9}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{6A1428DF-67CD-3DFE-8EE1-ED30D4146DC7}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{6D637F83-6813-3739-87C9-D17062B2153F}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{76571998-FC12-325A-BE39-36DEEE149120}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{7D746153-E588-3986-8C4E-862C476F0461}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{7DDEFFA7-B099-300E-815F-4F1B643CBB09}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{88F32276-7347-3203-83E3-292084623BCD}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{8DCF8AE1-8742-36A1-82A7-C575B2172B3F}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{B4AAEA17-0197-3C27-B128-71E26F813177}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{B73671BA-09E3-32CE-9202-41C203E7E835}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{B9274754-1313-327D-A931-5978AF063602}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{CEA0EBB9-5D83-3AFF-A0C7-17B8B75F2E32}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{CFC981CD-A927-37AF-BF61-AA263EA410E6}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{D10768FB-C112-3B89-84B4-964AE0881E03}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{DA85D1E4-38F5-3BC3-A32B-385AD2903AEB}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{DBFB52CA-3CB7-3D5F-BDC1-B015C5BDC120}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{E202BAE7-3FFD-3404-9AF8-4D3724164703}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{E501AF1F-1BC0-3427-8E5A-7518134720A2}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{F71879A2-E4CC-3A09-963E-383896AD8CC1}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{FE2BD2FB-13CB-3E3E-B501-7AC70C66ED04}\1.2.724.1\* [*]</pattern>
+            <!-- These are the entries removed from old snap-in sysmonitor.dll -->
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{16EC5BE8-DF93-4237-94E4-9EE918111D71}\InprocServer32\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{2735D9FD-F6B9-4F19-A5D9-E2D068584BC5}\InprocServer32\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{B2B066D2-2AAC-11CF-942F-008029004347}\InprocServer32\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{C4D2D8E0-D1DD-11CE-940F-008029004347}\InprocServer32\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\CLSID\{C4D2D8E0-D1DD-11CE-940F-008029004348}\InprocServer32\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{2F0FE930-BF29-3D41-A260-C32A04BC00AB}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{A6BAB94B-5D09-3FEE-8985-25A218DB52F5}\1.2.724.1\* [*]</pattern>
+            <pattern type="Registry">HKEY_CLASSES_ROOT\Record\{EF676C1F-512F-3317-B021-99A03C67951D}\1.2.724.1\* [*]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

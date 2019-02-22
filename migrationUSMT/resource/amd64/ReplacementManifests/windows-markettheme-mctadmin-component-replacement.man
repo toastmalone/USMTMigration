@@ -1,0 +1,32 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      name="Microsoft-Windows-MarketTheme-MCTAdmin-Component"
+      version="0.0.0.0" 
+      processorArchitecture="*"
+      language="neutral"
+      versionScope="nonSxS"
+      />
+  <migration
+      scope="Upgrade"
+      settingsVersion="0" 
+      replacementSettingsVersionRange="0" 
+      replacementVersionRange="6.1-6.1.7000"
+      alwaysProcess="6.1-6.1.7000">
+      >
+    <migXml xmlns="">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Windows\CurrentVersion\MCT\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

@@ -1,0 +1,82 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="zachd"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2004-08-12T19:06:43.4477679-07:00"
+    description="Windows Media Player downlevel manifest"
+    displayName="Windows Media Player downlevel manifest"
+    estimatedSize=""
+    manifestVersion="1.0"
+    owners="zachd"
+    supportInformation=""
+    testers="ginag"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-MediaPlayer-Migration-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSLaterThan("NT", "5.1")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0")</condition>
+        </detect>
+        <detect>
+          <condition negation="Yes">MigXmlHelper.DoesStringContentEqual("Registry","HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\WindowsFeatures [Windows Media Player]","0x00000000")</condition>
+        </detect>
+      </detects>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Player\Tasks\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [CDRecordPath]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [SearchPath]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [IgnoreBadFilePaths*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [LibraryDatabasePath]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [TranscodedFilesCachePath]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [ObfuscatedSyncPlaylistsPath]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [CurrentBackgroundScanFolder]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [BackgroundScanCompleteDate]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [TrackFoldersDirectories*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [RandomFolderName]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences\VideoSettings\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences\TrackFolders\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences\FindFolders\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [DebugShuffle]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [LastNotFoundDir]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [ExportCDTempFile]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Preferences [SetHMEPermissionsOnDBDone]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Subscriptions\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\MediaPlayer\Services\* [*]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+      <plugin
+          buildFilter="build.arch=x86"
+          classId="{8179c2ca-2b60-49d6-bc81-d796378b024e}"
+          file="Microsoft-Windows-MediaPlayer\MediaPlayer-DLMigPlugin.dll"
+          preDetectDiscover="False"
+          />
+    </migXml>
+    <migrationDisplayID>Programs\Media_Player_Settings</migrationDisplayID>
+  </migration>
+</assembly>

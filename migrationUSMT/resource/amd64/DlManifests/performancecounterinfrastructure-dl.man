@@ -1,0 +1,44 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="jenlc"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2005-08-09T21:00:00.993750-07:00"
+    description="Downlevel manifest for PerformanceCounterInfrastructureMigration"
+    displayName="Downlevel manifest for PerformanceCounterInfrastructureMigration"
+    estimatedSize=""
+    lastUpdateTimeStamp="2005-08-09T21:00:00.9993750-07:00"
+    manifestVersion="1.0"
+    owners="jenlc kulee"
+    supportInformation=""
+    testers="hahmed"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-PerformanceCounterInfrastructure-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0")</condition>
+        </detect>
+      </detects>
+      <plugin
+          classId="{dedf860b-4cd6-4d6b-9823-f656a2b2462b}"
+          file="Microsoft-Windows-PerformanceCounterInfrastructure-DL\CntrtextMig.dll"
+          />
+    </migXml>
+  </migration>
+</assembly>

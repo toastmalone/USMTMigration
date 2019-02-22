@@ -1,0 +1,80 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="dfsdev"
+    buildFilter=""
+    company="Microsoft Corp"
+    copyright="Microsoft"
+    creationTimeStamp="2004-05-24T17:39:48.5440428-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2005-05-10T17:21:13.088724Z"
+    manifestVersion="1.0"
+    owners="dfsdev"
+    supportInformation="dfsdev"
+    testers="dfsntest"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="*"
+      name="Microsoft-Windows-DFSN-ServerService-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!-- Declare for which Longhorn equivalent OC (name of deployment) this manifest corresponds to -->
+    <registerSDF name="DFSN-Server"/>
+    <!-- migXml element used only for the registerSDF element above -->
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+        </detect>
+      </detects>
+    </migXml>
+    <!-- Begin migration to Longhorn from Windows 2003 and R2 -->
+    <machineSpecific>
+      <migXml xmlns="">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+          </detect>
+        </detects>
+        <!-- Ruleset for migrating Windows 2003 and R2 -->
+        <rules context="System">
+          <include>
+            <objectSet>
+              <!-- Migrate root metadata. -->
+              <pattern type="Registry">HKLM\Software\Microsoft\Dfs\Roots\Standalone\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Dfs\Roots\Domain\* [*]</pattern>
+              <!-- In case the service Start value is set to Manual due to attack surface reduction on Win2K3, we need to preserve the same value from downlevel OS. -->
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs [Start]</pattern>
+              <!-- Knob values in same order as in the <configuration> section. -->
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs [SyncIntervalInSeconds]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs [PreferLogonDC]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs [DfsDnsConfig]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs\Parameters [SiteSupportIntervalInSeconds]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs\Parameters [DomainNameIntervalInSeconds]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs\Parameters [AllowableErrorsValue]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs\Parameters [LdapTimeoutValueInSeconds]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs\Parameters [MaxClientsToCache]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs\Parameters [QuerySiteCostTimeoutInSeconds]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs\Parameters [RootReferralTimeoutInSeconds]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs\Parameters [SiteCostedReferrals]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs\Parameters [InsiteReferrals]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs\Parameters [DfsDisableSiteAwareness]</pattern>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Services\Dfs\Parameters [NumWorkerThreads]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <!-- No pc-to-pc migration. -->
+  </migration>
+</assembly>

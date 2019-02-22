@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity
+      name="Microsoft-Windows-UsbMigPlugin"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration
+      alwaysProcess="yes"
+      replacementSettingsVersionRange="0"
+      replacementVersionRange="6.0.*"
+      scope="Upgrade"
+      settingsVersion="0"
+      >
+    <machineSpecific>
+      <migXml xmlns="">
+        <plugin
+            classId="{36FC9E60-C465-11CF-8056-444553540000}"
+            file="usb\usbmigplugin.dll"
+            />
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

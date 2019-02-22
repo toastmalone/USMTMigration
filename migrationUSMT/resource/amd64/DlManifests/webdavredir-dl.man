@@ -1,0 +1,58 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="navjotv"
+    buildFilter=""
+    company="Microsoft"
+    copyright="Microsoft"
+    creationTimeStamp="2003-07-29T15:36:27.7327073-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2004-10-13T18:05:44.1823357-07:00"
+    manifestVersion="1.0"
+    owners="kishore"
+    supportInformation=""
+    testers="hmlam"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="*"
+      name="Microsoft-Windows-WebDAVRedir-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.2.*")</condition>
+        </detect>
+      </detects>
+    </migXml>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WebClient\Parameters [ServerNotFoundCacheLifeTimeInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WebClient\Parameters [AcceptOfficeAndTahoeServers]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WebClient\Parameters [SupportLocking]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WebClient\Parameters [FileSizeLimitInBytes]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WebClient\Parameters [FileAttributesLimitInBytes]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WebClient\Parameters [BasicAuthLevel]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WebClient\Parameters [ClientDebug]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WebClient\Parameters [ServiceDebug]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

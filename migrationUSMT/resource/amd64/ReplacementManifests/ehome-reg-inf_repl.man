@@ -1,0 +1,49 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity name="Microsoft-Windows-ehome-reg-inf"
+      processorArchitecture="*"
+      version="0.0.0.0" />
+  <migration replacementSettingsVersionRange="0"
+      replacementVersionRange="6.0.0-6.1.4000"
+      settingsVersion="1">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- Files and Registry Keys\Entries to migrate from Vista-->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Multimedia\TV\Tuning Spaces\* [*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\eHome\Recording [recordings.xml]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <!-- Files and Registry Keys\Entries to exclude from Vista Upgrade -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center [Ident]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Extensibility\Applications\{3acc903b-b201-4602-b0d9-54ced66af2fa}</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Extensibility\Applications\{3acc903b-b201-4602-b0d9-54ced66af2fa}\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Extensibility\Applications\{3B07E1C5-DD2D-448b-B045-101ED7038E7D}</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Extensibility\Applications\{3B07E1C5-DD2D-448b-B045-101ED7038E7D}\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Extensibility\Applications\{3cdb7093-1b50-4f9e-ab57-307ff3167b81}</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Extensibility\Applications\{3cdb7093-1b50-4f9e-ab57-307ff3167b81}\* [*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Extensibility\Applications\{B3040AD2-4608-47a4-8508-D5F3C184D2A7}</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\Extensibility\Applications\{B3040AD2-4608-47a4-8508-D5F3C184D2A7}\* [*]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <!-- Files and Registry Keys\Entries to migrate -->
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Media Center\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

@@ -1,0 +1,69 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="AkhilW"
+    buildFilter=""
+    company="Microsoft Corporation"
+    copyright="Microsoft Corporation"
+    creationTimeStamp="2005-06-01T20:46:17.0709288Z"
+    description="$(resourceString.description1)"
+    displayName="$(resourceString.displayName1)"
+    lastUpdateTimeStamp="2005-06-27T19:13:31.5450725Z"
+    manifestVersion="1.0"
+    owners="RoopeshB"
+    supportInformation="nfsdev"
+    testers="nfstest"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-NFS-ClientCore-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!-- Declare for which Longhorn equivalent OC this manifest corresponds to -->
+    <registerSDF name="ClientForNFS-Infrastructure"/>
+    <migXml xmlns="">
+      <detects>
+        <!-- Detect presence of Longhorn down-level equiv feature -->
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\MSNFS\AppsInstalled\Client for NFS")</condition>
+        </detect>
+        <!-- Check as this is only valid for Windows Server 2003 R2 -->
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+        </detect>
+      </detects>
+    </migXml>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <detects>
+            <!-- Detect presence of Longhorn down-level equiv feature -->
+            <detect>
+              <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\MSNFS\AppsInstalled\Client for NFS")</condition>
+            </detect>
+            <!-- Check as this is only valid for Windows Server 2003 R2 -->
+            <detect>
+              <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+            </detect>
+          </detects>
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\NfsClnt\NFS LANs\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Client for NFS\CurrentVersion\Users\* [*]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Client for NFS\CurrentVersion\Default\* [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

@@ -1,0 +1,42 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="prasenni"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-28T11:51:38.2054652-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2005-04-12T00:06:49.9963520-07:00"
+    manifestVersion="1.0"
+    owners="rajakhan"
+    supportInformation=""
+    testers="Kmathur"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-WMI-SNMP-Provider-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      />
+  <migration>
+    <registerSDF name="WMISnmpProvider"/>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.IsOSLaterThan("NT", "5.1")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("File","%windir%\system32\wbem\snmpincl.dll")</condition>
+        </detect>
+      </detects>
+    </migXml>
+  </migration>
+</assembly>

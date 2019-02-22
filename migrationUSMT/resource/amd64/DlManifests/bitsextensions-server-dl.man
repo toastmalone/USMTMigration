@@ -1,0 +1,61 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="nraghu"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2005-04-17T23:19:59.7179214-07:00"
+    description="Downlevel manifest for BITS Server Extensions"
+    displayName="BITS Server Downlevel"
+    lastUpdateTimeStamp="2005-06-21T21:50:06.5375172-07:00"
+    manifestVersion="1.0"
+    owners="nraghu"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-BITSExtensions-Server-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration>
+    <!--Declare for which Longhorn equivalent OC this manifest corresponds too -->
+    <registerSDF name="BITSExtensions-Upload"/>
+    <machineSpecific>
+      <migXml xmlns="">
+        <detects>
+          <!--Detect presence of Longhorn down-level equiv feature -->
+          <!--Determined by the presence of a registry key -->
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("File","%system32% [bitssrv.dll]")</condition>
+          </detect>
+          <!--Check as this is only valid for down-level OS > than Windows 2003 -->
+          <detect>
+            <condition>MigXmlHelper.IsOSLaterThan("NT", "5.2.*")</condition>
+          </detect>
+        </detects>
+        <plugin
+            classId="{fd2b96fb-0f4d-47f2-8640-8a2f81cd7976}"
+            file="BITSExtensions-Server\bitsmig.dll"
+            />
+      </migXml>
+    </machineSpecific>
+    <migXml xmlns="">
+      <detects>
+        <!--Detect presence of Longhorn down-level equiv feature -->
+        <!--Determined by the presence of a registry key -->
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("File","%system32% [bitssrv.dll]")</condition>
+        </detect>
+        <!--Check as this is only valid for down-level OS > than Windows 2003 -->
+        <detect>
+          <condition>MigXmlHelper.IsOSLaterThan("NT", "5.2.*")</condition>
+        </detect>
+      </detects>
+    </migXml>
+  </migration>
+</assembly>

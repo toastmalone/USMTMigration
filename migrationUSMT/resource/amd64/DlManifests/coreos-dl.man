@@ -1,0 +1,64 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="xinyanz"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-31T17:06:03.3437377-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2003-07-31T17:06:03.3437377-07:00"
+    manifestVersion="1.0"
+    owners="tcpipdev"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-CoreOS-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration xmlns="">
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <detects>
+            <detect>
+              <condition>MigXmlHelper.IsOSEarlierThan("NT","6.0.0.0")</condition>
+            </detect>
+          </detects>
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion [RegisteredOrganization]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion [RegisteredOwner]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string
+            buildFilter=""
+            id="description"
+            value="Migrates core Windows settings from Windows 2000 or Windows XP systems"
+            />
+        <string
+            buildFilter=""
+            id="displayName"
+            value="Downlevel Core Windows settings"
+            />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

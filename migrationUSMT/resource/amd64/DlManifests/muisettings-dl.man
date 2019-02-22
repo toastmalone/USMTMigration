@@ -1,0 +1,52 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="avgarcia,laurag"
+    buildFilter=""
+    company="Microsoft"
+    copyright="Microsoft Corp"
+    description="Downlevel manifest support for MUI Settings"
+    displayName="Downlevel manifest for MUI Settings"
+    manifestVersion="1.0"
+    owners="muicore"
+    testers=""
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-MUI-Settings-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      />
+  <!-- migrate mui settings during upgrade and using migration wizard -->
+  <migration scope="Upgrade,MigWiz,USMT">
+    <migXml xmlns="">
+      <!-- Check as this manifest is only valid for down level OS < Windows Vista -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <!-- migrate Current user's preferred language setting to Vista current user (per user) -->
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Control Panel\Desktop [MultiUILanguageId]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <!-- migrate .default  preferred language setting to Vista HKLM (per system)-->
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKU\.DEFAULT\Control Panel\Desktop [MultiUILanguageId]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <!-- Migration display group id for migwiz -->
+    <migrationDisplayID>Date_Time_Language_and_Region\Regional_Language_Options</migrationDisplayID>
+  </migration>
+</assembly>

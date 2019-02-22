@@ -1,0 +1,62 @@
+<assembly xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+          manifestVersion="1.0"
+          displayName="BITS Server Downlevel"
+          description="Downlevel manifest for BITS Server Extensions"
+          company="Microsoft"
+          copyright=""
+          supportInformation=""
+          creationTimeStamp="2005-04-17T23:19:59.7179214-07:00"
+          lastUpdateTimeStamp="2005-06-21T21:50:06.5375172-07:00"
+          authors="nraghu"
+          owners="nraghu"
+          testers=""
+          buildFilter=""
+          xmlns="urn:schemas-microsoft-com:asm.v3">
+  
+<assemblyIdentity name="Microsoft-Windows-BITSExtensions-Server-Console-DL" version="0.0.0.0" processorArchitecture="*" language="*"></assemblyIdentity>
+
+<migration>
+   <!--Declare for which Longhorn equivalent OC this manifest corresponds too -->
+   <registerSDF name="BITSExtensions-AdminPack"></registerSDF>
+  <machineSpecific>
+   <migXml xmlns="">
+     <detects>
+       <!--Detect presence of Longhorn down-level equiv feature -->
+       <!--Determined by the presence of a registry key -->
+       <detect>
+       <condition>MigXmlHelper.DoesObjectExist("File","%system32% [bitsmgr.dll]")</condition>
+       </detect>
+
+       <detect>
+       <condition negation="yes">MigXmlHelper.DoesObjectExist("File","%system32% [bitssrv.dll]")</condition>
+       </detect>
+
+       <!--Check as this is only valid for down-level OS > than Windows 2003 -->
+       <detect>
+       <condition>MigXmlHelper.IsOSLaterThan("NT", "5.2.*")</condition>
+       </detect>
+       </detects>
+   </migXml>   
+  </machineSpecific>
+
+  <migXml xmlns="">
+     <detects>
+       <!--Detect presence of Longhorn down-level equiv feature -->
+       <!--Determined by the presence of a registry key -->
+       <detect>
+       <condition>MigXmlHelper.DoesObjectExist("File","%system32% [bitsmgr.dll]")</condition>
+       </detect>
+
+       <detect>
+       <condition negation="yes">MigXmlHelper.DoesObjectExist("File","%system32% [bitssrv.dll]")</condition>
+       </detect>
+
+       <!--Check as this is only valid for down-level OS > than Windows 2003 -->
+       <detect>
+       <condition>MigXmlHelper.IsOSLaterThan("NT", "5.2.*")</condition>
+       </detect>
+       </detects>
+   </migXml>   
+</migration>
+</assembly>

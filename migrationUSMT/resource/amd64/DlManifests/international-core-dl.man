@@ -1,0 +1,83 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="yanivf"
+    buildFilter=""
+    company="MSFT"
+    copyright=""
+    creationTimeStamp="2003-07-19T21:22:36.5476492-07:00"
+    description="NLS downlevel configration migration"
+    displayName="NLS downlevel configration migration"
+    lastUpdateTimeStamp="2005-04-13T17:51:11.6717576-07:00"
+    manifestVersion="1.0"
+    owners=""
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-International-Core-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <machineSpecific>
+      <migXml xmlns="">
+        <plugin
+            classId="{36af497c-c440-4282-a59e-02ed63498b7c}"
+            file="Microsoft-Windows-International-Core-DL\NLSCoreMig.dll"
+            />
+        <rules context="System">
+          <include>
+            <objectSet>
+              <!-- Locales -->
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Nls\Language [Default]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Nls\Locale [(Default)]</pattern>
+              <!-- Codepages -->
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Nls\CodePage [ACP]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Nls\CodePage [OEMCP]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Nls\CodePage [MACCP]</pattern>
+              <!-- Custom keyboard layouts -->
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Keyboard Layouts\a* [*]</pattern>
+              <!-- .Default settings -->
+              <pattern type="Registry">HKU\.Default\Control Panel\International\* [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <migXml xmlns="">
+      <!-- Check as this is only valid for down-level OS < than Windows Vista -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <plugin
+          classId="{36af497c-c440-4282-a59e-02ed63498b7c}"
+          file="Microsoft-Windows-International-Core-DL\NLSCoreMig.dll"
+          />
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Control Panel\International\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- Migrate custom locale files -->
+            <pattern type="File">%windir%\Globalization [*.NLP]</pattern>
+            <!-- Migrate custom locale reg keys -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Nls\CustomLocale\* [*]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Control\Nls\IetfLanguage\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Date_Time_Language_and_Region\Regional_Language_Options</migrationDisplayID>
+  </migration>
+</assembly>

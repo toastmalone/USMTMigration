@@ -1,0 +1,74 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="philh"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-07-18T13:04:43.4054402-07:00"
+    lastUpdateTimeStamp="2005-02-02T01:39:02.9208750-08:00"
+    manifestVersion="1.0"
+    owners="philh"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-CAPI2-certs-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      xmlns=""
+      scope="Upgrade,MigWiz,USMT"
+      >
+    <migXml>
+      <!-- Check as this is only valid for down-level OS < than Windows Vista ? -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT","6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\SystemCertificates\My\Certificates[*]</pattern>
+            <pattern type="File">%CSIDL_APPDATA%\Microsoft\SystemCertificates\Request\Certificates[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\TrustedPublisher\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\TrustedPeople\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\Disallowed\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\SystemCertificates\CA\Certificates\*[*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\My\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Request\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\TrustedPublisher\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\TrustedPeople\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Disallowed\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\CA\Certificates\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\ACRS\CTLs\*[*]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\EnterpriseCertificates\*[*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SystemCertificates\Root\Certificates\2BD63D28D7BCD0E251195AEB519243C13142EBC3\*[*]</pattern>
+          </objectSet>
+        </exclude>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Additional_Options\Windows_Core_Settings</migrationDisplayID>
+  </migration>
+</assembly>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<assembly>
+  <assemblyIdentity name="Microsoft-Hyper-V-VStack-Config"
+                    version="0.0.0.0"
+                    processorArchitecture="*"
+                    language="*"/>
+  <migration
+      scope="Upgrade"
+      settingsVersion="0"
+      replacementSettingsVersionRange="0"
+      replacementVersionRange="6.0-6.1.6999"
+      alwaysProcess="yes"
+      >
+    <migXml xmlns="">
+      <detects>
+           <detect>
+               <condition>MigXmlHelper.DoesObjectExist("File", "%systemroot%\system32 [vmms.exe]")</condition>
+           </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- Collect Hyper-V Server settings in the registry -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Virtualization\* [*]</pattern>
+            <!-- Collect Hyper-V configuration files and Azman store -->   
+            <pattern type="File">%ProgramData%\Microsoft\Windows\Hyper-V\* [*]</pattern>
+          </objectSet>
+        </include>
+        <exclude>
+          <objectSet>
+            <!-- Don't merge the Hyper-V Version value -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Virtualization [Version]</pattern>
+            <!-- Don't merge the Hyper-V InstallDate value -->
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\Virtualization [InstallDate]</pattern>
+          </objectSet>
+        </exclude>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <!-- Always copy the Hyper-V configuration files and Azman store -->
+            <pattern type="File">%ProgramData%\Microsoft\Windows\Hyper-V\* [*]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

@@ -1,0 +1,128 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="ssheehan"
+    buildFilter=""
+    company="Microsoft"
+    copyright="Microsoft Corporation"
+    creationTimeStamp="2004-06-09T17:39:55.7433860-07:00"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2005-02-25T01:08:57.4517493-08:00"
+    manifestVersion="1.0"
+    owners="sdodge"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-TabletPC-Platform-Input-Core-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <!-- declare for which Vista OC the downlevel OC corresponds to -->
+    <registerSDF name="Microsoft-Windows-Client-Features-Update"/>
+    <migXml xmlns="">
+      <!-- user settings -->
+      <rules context="User">
+        <detects>
+          <!-- we only support WinXP -->
+          <detect>
+            <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+          </detect>
+          <!-- with TabletPC bits installed -->
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Classes\CLSID\{A5B020FD-E04B-4e67-B65A-E7DEED25B2CF}")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [TapTime.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [TapTime.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [TapTime]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [DblDist.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [DblDist.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [DblDist]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [DblTime.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [DblTime.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [DblTime]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [HoldMode]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [WaitTime.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [WaitTime.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [WaitTime]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [OpenTime.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [OpenTime.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [OpenTime]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [HoldTime.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [HoldTime.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [HoldTime]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [CloseTime.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [CloseTime.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [CloseTime]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [Splash.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [Splash.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [Splash]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [Cancel.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [Cancel.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [Cancel]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [Move.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [Move.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [Move]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [LagTime]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [EraseEnable]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [RightMaskEnable]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeEnable]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeAngle.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeAngle.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeAngle]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeRate.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeRate.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeRate]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeSize.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeSize.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeSize]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeCount.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeCount.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeCount]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeTime.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeTime.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShakeTime]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [HoverLimit.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [HoverLimit.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [HoverLimit]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [HoverCount.min]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [HoverCount.max]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [HoverCount]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <detects>
+            <!-- we only support WinXP -->
+            <detect>
+              <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+            </detect>
+            <!-- with TabletPC bits installed -->
+            <detect>
+              <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\Software\Classes\CLSID\{A5B020FD-E04B-4e67-B65A-E7DEED25B2CF}")</condition>
+            </detect>
+          </detects>
+          <!-- this corresponds to the linearity data -->
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\TabletPC\* [*]</pattern>
+              <pattern type="Registry">HKLM\Software\Microsoft\Wisp\ExcludedDevices\* [*]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+    <migrationDisplayID>Tablet_PC_Settings\Tablet_PC_General_Options</migrationDisplayID>
+  </migration>
+</assembly>

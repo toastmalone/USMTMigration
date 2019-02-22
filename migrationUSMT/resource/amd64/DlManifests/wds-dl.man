@@ -1,0 +1,194 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="alaa"
+    buildFilter=""
+    company="Microsoft Corp."
+    copyright="Microsoft Corp."
+    description="Captures settings from downlevel Windows Deployment Services and Remote Installation Services."
+    displayName="Microsoft Windows Deployment Services Downlevel Manifest"
+    manifestVersion="1.0"
+    owners="wdsdev"
+    supportInformation=""
+    testers="wdstest"
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-Deployment-Services-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!-- Declare for which Longhorn equivalent OC this manifest corresponds too -->
+    <!-- In Longhorn, the new WDS is now split into 3 different WDS updates + an additional
+         one that installs Legacy SIS for upgrade scenarios only -->
+    <registerSDF name="Microsoft-Windows-Deployment-Services"/>
+    <registerSDF name="Microsoft-Windows-Deployment-Services-Deployment-Server"/>
+    <registerSDF name="Microsoft-Windows-Deployment-Services-Transport-Server"/>
+    <registerSDF name="Microsoft-Windows-Deployment-Services-Legacy-SIS"/>
+    <migXml xmlns="">
+      <!-- Check that the following conditions are true:
+           1. We're running Windows Server 2003
+           2. The RemInst OC flag is set, which indicates we have RIS/WDS
+           3. Either the BINLSVC or the WDSServer service exists, which confirms we really have RIS/WDS installed -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.2.*")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OC Manager\Subcomponents [reminst]", "0x00000001")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\BINLSVC")</condition>
+          <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\SYSTEM\CurrentControlSet\Services\WDSServer")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <exclude>
+          <objectSet>
+            <!-- The BINLSVC key lives under the WDSPXE\Providers tree that we include in the capture
+                 operation. Explicitly exclude it here so that we can only include the specific settings
+                 we want from under BINLSVC -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\* [*]</pattern>
+          </objectSet>
+        </exclude>
+        <include>
+          <objectSet>
+            <!-- Captures settings from Downlevel TFTPD -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\TFTPD\Parameters [Directory]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\TFTPD\Parameters [Readable]</pattern>
+            <!-- The following sections capture settings from Downlevel WDS Components -->
+            <!-- Microsoft-Windows-Deployment-Services-PXE-Server -->
+            <!-- The ProvidersOrder setting currently lives wds-binlsvc.man but it logically belongs here -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE [IsCritical]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE [ProvidersOrder]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE [DisableRogueDetection]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE [AuthRecheckTime]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE [AuthFailureRetryTime]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE [UseDhcpPorts]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE [BannedGuids]</pattern>
+            <!-- Capture all registered PXE providers. This complete capture is only intended for 3rd-party providers -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\* [*]</pattern>
+            <!-- Microsoft-Windows-Deployment-Services-BINL-Server -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [IsCritical]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\BINLSVC [IsCritical]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\BootImages\ia64 [Default]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\BootImages\x64 [Default]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\BootImages\x86 [Default]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\BootPrograms\ia64 [Default]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\BootPrograms\ia64 [N12]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\BootPrograms\x64 [Default]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\BootPrograms\x64 [N12]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\BootPrograms\x86 [Default]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\BootPrograms\x86 [N12]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [Debug]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [DisableArchDisc]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [GenerateBootIni]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [netbootAllowNewClients]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [netbootAnswerOnlyValidClients]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [netbootAnswerRequests]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [netbootCurrentClientCount]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [netbootLimitClients]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [netbootMaxClients]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [netbootNewMachineNamingPolicy]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [netbootNewMachineOU]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [netbootServer]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\OSChooser []</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [ResponseDelay]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [ScpCreated]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [ResetBootProgram]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [NewMachineDomainJoin]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [NewMachineOUType]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [BcdRefresh]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [BcdRefreshTime]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [AllowN12ForNewClients]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [ADSearchOrder]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [ClientIdUse]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [DefaultServer]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC [DefaultGCServer]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove [Policy]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove [PollInterval]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove [PollMaxRetry]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove [PollMessage]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove [ApprovedRetention]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove [OtherRetention]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x86 [ReferralServer]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x86 [BootProgramPath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x86 [BootImagePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x86 [WdsUnattendFilePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x86 [User]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x86 [JoinRights]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x86 [JoinDomain]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\ia64 [ReferralServer]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\ia64 [BootProgramPath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\ia64 [BootImagePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\ia64 [WdsUnattendFilePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\ia64 [User]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\ia64 [JoinRights]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\ia64 [JoinDomain]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x64 [ReferralServer]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x64 [BootProgramPath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x64 [BootImagePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x64 [WdsUnattendFilePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x64 [User]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x64 [JoinRights]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WDSPXE\Providers\BINLSVC\AutoApprove\x64 [JoinDomain]</pattern>
+            <!-- Microsoft-Windows-Deployment-Services-Image-Server -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WdsImgSrv [IsCritical]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WdsImgSrv\Unattend\x86 [FilePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WdsImgSrv\Unattend\x64 [FilePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WdsImgSrv\Unattend\ia64 [FilePath]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WdsImgSrv\Unattend [Enabled]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WdsImgSrv\Unattend [CommandLineUnattendPrecedence]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WdsImgSrv [FilterImageVersion]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WdsImgSrv\ClientLogging [Enabled]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Providers\WdsImgSrv\ClientLogging [LogLevel]</pattern>
+            <!-- Microsoft-Windows-Deployment-Services-Server -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer [Start]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WDS [SetupComplete]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WDS [EnableDhcpFixup]</pattern>
+            <!-- Excluded this LH-only setting: <pattern type="Registry">HKLM\SOFTWARE\Microsoft\WDS [TransportProtocols]</pattern> -->
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters [RpcPort]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters [SharedPorts]</pattern>
+            <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\WDSServer\Parameters [UpdateTime]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSSERVER [ConsoleTracingMask]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSSERVER [DebugOutput]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSSERVER [EnableConsoleTracing]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSSERVER [EnableFileTracing]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSSERVER [FileDirectory]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSSERVER [FileTracingMask]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSSERVER [MaxFileSize]</pattern>
+            <!-- Microsoft-Windows-Deployment-Services-Client-Server-Library -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSCSL [ConsoleTracingMask]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSCSL [DebugOutput]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSCSL [EnableConsoleTracing]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSCSL [EnableFileTracing]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSCSL [FileDirectory]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSCSL [FileTracingMask]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSCSL [MaxFileSize]</pattern>
+            <!-- Microsoft-Windows-Deployment-Services-Management-API -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMGMT [ConsoleTracingMask]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMGMT [DebugOutput]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMGMT [EnableConsoleTracing]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMGMT [EnableFileTracing]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMGMT [FileDirectory]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMGMT [FileTracingMask]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMGMT [MaxFileSize]</pattern>
+            <!-- Microsoft-Windows-Deployment-Services-Management-GUI -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMMC [ConsoleTracingMask]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMMC [DebugOutput]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMMC [EnableConsoleTracing]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMMC [EnableFileTracing]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMMC [FileDirectory]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMMC [FileTracingMask]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Tracing\WDSMMC [MaxFileSize]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

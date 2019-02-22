@@ -1,0 +1,59 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="kalyancs"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2004-10-14T09:04:16.2261744+05:30"
+    description=""
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2005-03-02T10:23:41.7401635+05:30"
+    manifestVersion="1.0"
+    owners="amitlal"
+    supportInformation=""
+    testers="srir"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="*"
+      name="Microsoft-Windows-IdmuMgmt-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!--Declare for which Longhorn equivalent OC this manifest corresponds too -->
+    <registerSDF name="AdminUI"/>
+    <migXml xmlns="">
+      <!-- This detects section is added just to identify whether the component is present or not -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\Identity Management for UNIX")</condition>
+          <condition>MigXmlHelper.DoesObjectExist("Registry","HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MMC\SnapIns\FX:{165698a7-406d-488a-a0cd-85572142ea47}")</condition>
+          <condition>MigXmlHelper.DoesObjectExist("Registry","HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MMC\SnapIns\FX:{6857EBED-5522-48d4-8F8B-DE5FEEDE003C}")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT","6.1.0")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <!-- Collect this file on non Longhorn systems -->
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\Identity Management for UNIX")</condition>
+            <condition>MigXmlHelper.DoesObjectExist("Registry","HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MMC\SnapIns\FX:{165698a7-406d-488a-a0cd-85572142ea47}")</condition>
+            <condition>MigXmlHelper.DoesObjectExist("Registry","HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MMC\SnapIns\FX:{6857EBED-5522-48d4-8F8B-DE5FEEDE003C}")</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT","6.1.0")</condition>
+          </detect>
+        </detects>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

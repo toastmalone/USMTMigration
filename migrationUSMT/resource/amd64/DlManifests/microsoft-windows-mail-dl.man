@@ -1,0 +1,59 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="danstrut"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2003-11-24T12:08:20.1209335-08:00"
+    description="Downlevel manifest for Windows Mail"
+    displayName="Windows Mail Downlevel Manifest"
+    lastUpdateTimeStamp="2004-08-25T00:47:04.0950053-07:00"
+    manifestVersion="1.0"
+    owners="danstrut"
+    supportInformation=""
+    testers="kfour"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-Mail-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration
+      xmlns=""
+      scope="Upgrade,MigWiz,USMT"
+      >
+    <migXml>
+      <environment context="System">
+        <variable
+            name="WinmailExePath"
+            remap="TRUE"
+            >
+          <script>MigXmlHelper.GetStringContent("Registry","HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\msimn.exe []")</script>
+        </variable>
+      </environment>
+      <rules context="User">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Identities\* [*]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Internet Account Manager\* [*]</pattern>
+            <pattern type="File">%UserProfile%\Local Settings\Application Data\Identities\* [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <migrationDisplayID>Communications_and_Sync\Windows_Mail</migrationDisplayID>
+  </migration>
+</assembly>

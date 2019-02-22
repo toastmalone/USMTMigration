@@ -1,0 +1,46 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+
+<!-- *************** Down Level Manifest For Upgrade from R2 to LH ********************** --><assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="sanuidev"
+    buildFilter=""
+    company="Microsoft Corp"
+    copyright="Microsoft"
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    manifestVersion="1.0"
+    owners="sanuidev"
+    supportInformation="sanuidev"
+    testers="sanuidev"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-SanMmc-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!-- Declare for which Longhorn equivalent OC this manifest corresponds to -->
+    <registerSDF name="StorageManagerForSANs"/>
+    <!-- Begin migration to Vista from non-Vista Server OS -->
+    <!-- In-place section. Declarations here will not be migrated pc-to-pc. -->
+    <migXml xmlns="">
+      <detects>
+        <!-- Make sure this DL manifest is called only on DownLevel machine - Storage Manager for SANs was introduced in OS W2k3 R2 prior to LH -->
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("File","%windir%\system32\Microsoft.Storage.SanMmc.dll")</condition>
+        </detect>
+      </detects>
+    </migXml>
+  </migration>
+</assembly>

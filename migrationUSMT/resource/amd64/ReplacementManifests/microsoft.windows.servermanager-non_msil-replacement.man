@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity
+      name="Microsoft.Windows.ServerManager-NonMSIL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      language="*"/>
+  <migration scope="Upgrade,MigWiz"
+      settingsVersion="0"
+      replacementVersionRange="6.0-6.1.7028"
+      replacementSettingsVersionRange="0"
+      alwaysProcess="yes">
+    <migXml xmlns="">
+      <rules context="System">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows\CurrentVersion\AppServer</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

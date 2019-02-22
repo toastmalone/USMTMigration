@@ -1,0 +1,53 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="adamland"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2005-02-16T05:54:44.0397595-08:00"
+    description="$(resourceString.description1)"
+    displayName="$(resourceString.displayName0)"
+    lastUpdateTimeStamp="2005-06-09T04:09:28.6964147Z"
+    manifestVersion="1.0"
+    owners="sfddev"
+    supportInformation="sfddev"
+    testers="nmsdtest"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="neutral"
+      name="Microsoft-Windows-SystemRestore-Main-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!-- Begin migration to Vista from non-Vista Server OS -->
+    <!-- In-place section. Declarations here will not be migrated pc-to-pc. -->
+    <machineSpecific>
+      <migXml xmlns="">
+        <!-- Ruleset for migrating Windows XP -->
+        <rules context="System">
+          <detects>
+            <detect>
+              <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+            </detect>
+          </detects>
+          <!-- Gather the registry value that indicates if SR is disabled on the XP source so we can move it to 
+          a new location on the target.-->
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore [DisableSR]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

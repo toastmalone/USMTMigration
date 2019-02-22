@@ -57,7 +57,7 @@ namespace migrationUSMT
                     
                 string DIR = "cd amd64";
                     
-                //string scan = "./scanstate " + store + @"\\" +  machineName + "_" + date + " " + "/localonly /c /ue:* /i:MigUser.xml /i:MigApp.xml /i:MigDocs.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt";
+                
                 string scan = String.Format(@"./scanstate {0}\\{1}_{2} /localonly /c /ue:* /i:MigUser.xml /i:MigApp.xml /i:MigApp.xml /i:MigDocs.xml /i:MigDocs.xml /v:13 /vsc /progress:prog.log /listfiles:filelist.txt"
                                             , store, machineName, date);
                 

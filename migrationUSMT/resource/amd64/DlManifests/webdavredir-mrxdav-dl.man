@@ -1,0 +1,66 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="navjotv"
+    buildFilter=""
+    company="Microsoft"
+    copyright="Microsoft"
+    creationTimeStamp="2003-07-29T15:36:27.7327073-07:00"
+    description="WebDAV Client Redirector Driver (ClientCore) (All pieces)"
+    displayName="WebDAV Client Redirector Driver"
+    lastUpdateTimeStamp="2004-10-13T18:05:44.1823357-07:00"
+    manifestVersion="1.0"
+    owners="dkruse"
+    supportInformation=""
+    testers="atherh"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="*"
+      name="Microsoft-Windows-WebDAVRedir-MrxDAV-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      type=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.2.*")</condition>
+        </detect>
+      </detects>
+    </migXml>
+    <machineSpecific>
+      <migXml xmlns="">
+        <rules context="System">
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [FileInformationCacheLifeTimeInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [FileNotFoundCacheLifeTimeInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [NameCacheMaxEntries]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [CreateRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [CreateVNetRootRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [QueryDirectoryRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [CloseRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [CreateSrvCallRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [FinalizeSrvCallRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [FinalizeFobxRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [FinalizeVNetRootRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [ReNameRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [SetFileInfoRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [QueryFileInfoRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [QueryVolumeInfoRequestTimeoutInSec]</pattern>
+              <pattern type="Registry">HKLM\SYSTEM\CurrentControlSet\Services\MRxDAV\Parameters [LockRefreshRequestTimeoutInSec]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </migXml>
+    </machineSpecific>
+  </migration>
+</assembly>

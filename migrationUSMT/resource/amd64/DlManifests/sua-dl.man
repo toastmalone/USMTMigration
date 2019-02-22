@@ -1,0 +1,104 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+
+<!-- ******* Down Level Manifest For Component Subsystem-for-UNIX-based-applications ******* --><assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="pradeepa"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2005-09-23T03:41:23.1615523+05:30"
+    description="Downlevel manifest for Subsystem-for-UNIX-based-applications"
+    displayName="Subsystem-for-UNIX-based-applications"
+    lastUpdateTimeStamp="2005-09-23T03:41:23.1615523+05:30"
+    manifestVersion="1.0"
+    owners="pradeepa"
+    supportInformation=""
+    testers="shankul"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="*"
+      name="Subsystem-for-UNIX-based-applications-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!-- Declare for which Longhorn equivalent OC this manifest corresponds too -->
+    <registerSDF name="SUA"/>
+    <migXml xmlns="">
+      <!-- This detects section is added just to identify whether the component is present or not -->
+      <detects>
+        <!-- First Condition evaluates whether the OS is in the set {Windows XP, 2000, 2003, Vista} 
+	            "AND" the second one evaluates whether SFU 3.5 "OR" SUA is installed 
+	       -->
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.1.0")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\SUA\AppsInstalled\Interix Subsystem")</condition>
+          <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\Services for UNIX\AppsInstalled\Interix Subsystem")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <rules>
+          <detects>
+            <!-- Check as this is only valid for down-level OS == Windows XP, 2000 or 2003 & SFU 3.5 ;-->
+            <!-- Determined by the presence of a registry key -->
+            <detect>
+              <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\Services for UNIX\AppsInstalled\Interix Subsystem")</condition>
+            </detect>
+            <detect>
+              <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0")</condition>
+            </detect>
+          </detects>
+          <include>
+            <objectSet>
+              <pattern type="File">%SFUDIR%\etc [profile.usr]</pattern>
+              <pattern type="File">%SFUDIR%\etc [csh.cshrc]</pattern>
+              <pattern type="File">%SFUDIR%\etc [csh.login]</pattern>
+              <pattern type="File">%SFUDIR%\etc [csh.logout]</pattern>
+              <pattern type="File">%SFUDIR%\etc [profile]</pattern>
+              <pattern type="File">%SFUDIR%\etc [rpc]</pattern>
+              <pattern type="File">%SFUDIR%\etc [inetd.conf]</pattern>
+              <pattern type="File">%SFUDIR%\etc [syslog.conf]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Services For UNIX [EnableSetuidBinaries]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+        <rules context="System">
+          <detects>
+            <!-- Check as this is only valid for down-level OS == Windows 2003(5.2.*) or Vista(6.0.*) & SUA 
+	       	    XP 64 also has the same version, but we dont have SFU 3.5 for XP 64
+	       ;-->
+            <!-- Determined by the presence of a registry key -->
+            <detect>
+              <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\SUA\AppsInstalled\Interix Subsystem")</condition>
+            </detect>
+            <detect>
+              <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+              <condition>MigXmlHelper.DoesOSMatch("NT", "6.0.*")</condition>
+            </detect>
+          </detects>
+          <include>
+            <objectSet>
+              <pattern type="File">%systemroot%\SUA\etc [profile.usr]</pattern>
+              <pattern type="File">%systemroot%\SUA\etc [csh.cshrc]</pattern>
+              <pattern type="File">%systemroot%\SUA\etc [csh.login]</pattern>
+              <pattern type="File">%systemroot%\SUA\etc [csh.logout]</pattern>
+              <pattern type="File">%systemroot%\SUA\etc [profile]</pattern>
+              <pattern type="File">%systemroot%\SUA\etc [rpc]</pattern>
+              <pattern type="File">%systemroot%\SUA\etc [inetd.conf]</pattern>
+              <pattern type="File">%systemroot%\SUA\etc [syslog.conf]</pattern>
+              <pattern type="Registry">HKLM\SOFTWARE\Microsoft\SUA [EnableSetuidBinaries]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

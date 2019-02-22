@@ -1,0 +1,51 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="ericflo"
+    company="MS"
+    copyright=""
+    creationTimeStamp="2003-11-11T22:56:35.2127782-08:00"
+    description="Shell Settings migration downlevel manifest"
+    displayName="Shell Settings migration downlevel manifest"
+    lastUpdateTimeStamp="2004-01-13T20:17:21.6405892+00:00"
+    manifestVersion="1.0"
+    owners="ericflo"
+    supportInformation=""
+    testers="seanhi"
+    >
+  <assemblyIdentity
+      language="*"
+      name="Microsoft-Windows-shmig-DL"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration scope="Upgrade,MigWiz,USMT">
+    <machineSpecific>
+      <migXml xmlns="">
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+          </detect>
+        </detects>
+        <plugin
+            classId="{526D451C-721A-4b97-AD34-DCE5D8CD22C5}"
+            file="Microsoft-Windows-shmig-DL\shmig.dll"
+            />
+      </migXml>
+    </machineSpecific>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT", "6.0.0.0")</condition>
+        </detect>
+      </detects>
+      <plugin
+          classId="{050ed09e-a530-41e6-8ac9-a9a96e74a2c1}"
+          file="Microsoft-Windows-shmig-DL\shmig.dll"
+          />
+    </migXml>
+    <migrationDisplayID>Appearance_and_Display\Personalized_Settings</migrationDisplayID>
+  </migration>
+</assembly>

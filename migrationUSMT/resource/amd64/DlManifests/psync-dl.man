@@ -1,0 +1,69 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="kalyancs"
+    buildFilter=""
+    company="Microsoft"
+    copyright=""
+    creationTimeStamp="2004-10-14T09:04:16.2261744+05:30"
+    description=""
+    displayName="$(resourceString.displayName)"
+    lastUpdateTimeStamp="2005-03-02T10:23:41.7401635+05:30"
+    manifestVersion="1.0"
+    owners="amitlal"
+    supportInformation=""
+    testers="srir"
+    >
+  <assemblyIdentity
+      buildFilter=""
+      buildType="$(build.buildType)"
+      language="*"
+      name="Microsoft-Windows-Password-Synchronization-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <!--Declare for which Longhorn equivalent OC this manifest corresponds too -->
+    <registerSDF name="PSync"/>
+    <migXml xmlns="">
+      <!-- This detects section is added just to identify whether the component is present or not -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\PswdSync")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.IsOSEarlierThan("NT","6.1.0")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <!-- Collect this file on non Longhorn systems -->
+        <detects>
+          <detect>
+            <condition>MigXmlHelper.DoesObjectExist("Registry","HKLM\SOFTWARE\Microsoft\PswdSync")</condition>
+          </detect>
+          <detect>
+            <condition>MigXmlHelper.IsOSEarlierThan("NT","6.1.0")</condition>
+          </detect>
+        </detects>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PswdSync [DaemonEncryptionKey]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PswdSync [DaemonPortNumber]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PswdSync [EncryptionKey]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PswdSync [Logging]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PswdSync [Max Retries]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PswdSync [Port Number]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PswdSync [SyncDirection]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PswdSync [Update Retry Interval]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PswdSync [SNISPasswordSyncEnable]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\PswdSync\Domains\*  [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

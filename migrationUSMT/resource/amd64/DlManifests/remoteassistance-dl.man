@@ -1,0 +1,56 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    company="Microsoft Corporation"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-RemoteAssistance-Downlevel"
+      processorArchitecture="x86"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration>
+    <supportedComponent>
+      <supportedComponentIdentity
+          language="neutral"
+          name="Microsoft-Windows-RemoteAssistance-Downlevel"
+          processorArchitecture="x86"
+          version="0.0.0.0"
+          />
+    </supportedComponent>
+    <!-- Check as this is only valid for down-level OS less than Windows Vista, specifically XP and W2K3 for RA -->
+    <detects>
+      <detect>
+        <condition>MigXmlHelper.IsOSEarlierThan("NT", "5.2.*")</condition>
+        <condition>MigXmlHelper.IsOSLaterThan("NT", "5.1.*")</condition>
+      </detect>
+    </detects>
+    <migXml xmlns="">
+      <rules context="System">
+        <!-- Collect fAllowToGetHelp always -->
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Terminal Server [fAllowToGetHelp]</pattern>
+          </objectSet>
+        </include>
+        <!-- Collect fAllowFullControl only if it exists -->
+        <rules>
+          <detects>
+            <detect>
+              <condition>MigXmlHelper.DoesObjectExist("Registry", "HKLM\System\CurrentControlSet\Control\Terminal Server [fAllowFullControl]")</condition>
+            </detect>
+          </detects>
+          <include>
+            <objectSet>
+              <pattern type="Registry">HKLM\System\CurrentControlSet\Control\Terminal Server [fAllowFullControl]</pattern>
+            </objectSet>
+          </include>
+        </rules>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>

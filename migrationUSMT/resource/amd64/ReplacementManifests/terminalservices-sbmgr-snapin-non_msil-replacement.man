@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly>
+  <assemblyIdentity
+      name="TerminalServicesSBMgrReplacement"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+
+  <migration 
+     replacementSettingsVersionRange="0" 
+     settingsVersion="0"
+     alwaysProcess="yes">
+      <registerSDF name="SBMgr-UI"/>
+      <migXml xmlns="">
+      <!-- On a Win7 or Vista, we detect the presence of session broker role by -->
+      <!-- looking for tssdis.exe                            -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesObjectExist( "File", "%windir%\system32 [tssdis.exe]" )</condition>
+        </detect>
+      </detects>
+      </migXml>
+  </migration>
+</assembly>

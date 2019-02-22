@@ -1,0 +1,144 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    manifestVersion="1.0"
+    >
+  <assemblyIdentity
+      name="Microsoft-Windows-TabletPC-UIHub"
+      processorArchitecture="*"
+      version="0.0.0.0"
+      />
+  <migration
+      replacementVersionRange="6.0.*"
+      replacementSettingsVersionRange="0"
+      settingsVersion="0"
+      >
+    <migXml xmlns="">
+      <rules context="User">
+        <include>
+          <objectSet>
+            <pattern type="File">%windir% [Microsoft-Windows-TabletPC-UIHub.dat]</pattern>
+          </objectSet>
+        </include>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [Down]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [DownLeft]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [DownRight]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [Up]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [UpLeft]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [UpRight]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [Left]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [Right]</pattern>
+          </objectSet>
+        </include>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [TouchFlickTolerance]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [FlickMode]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [FlickTolerance]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [ShowFlickTrayIcon]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [FlickNotificationsRemaining]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [UIButtonMode]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [UIModKeyMode]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [UIDoubleTapMode]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [UIHoldMode]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [UIRightTapMode]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [UITapMode]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [UIFeedbackMode]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [UICursorMode]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters [FlickHubSetupDone]</pattern>
+            <pattern type="Registry">HKCU\Software\Microsoft\Wisp\Pen\SysEventParameters\CustomFlickCommands [*]</pattern>
+          </objectSet>
+        </include>
+        <merge script="MigXmlHelper.SourcePriority()">
+          <objectSet>
+            <pattern type="File">%windir% [Microsoft-Windows-TabletPC-UIHub.dat]</pattern>
+          </objectSet>
+        </merge>
+      </rules>
+      <rules context="system">
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\TabletTip\ZOrderNonCompete [wisptis_feedback_window]</pattern>
+          </objectSet>
+        </include>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [Down]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [DownLeft]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [DownRight]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [Up]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [UpLeft]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [UpRight]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [Left]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters\FlickCommands [Right]</pattern>
+          </objectSet>
+        </include>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [TouchFlickTolerance]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [FlickMode]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [FlickTolerance]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [ShowFlickTrayIcon]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [FlickNotificationsRemaining]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [UIButtonMode]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [UIModKeyMode]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [UIDoubleTapMode]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [UIHoldMode]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [UIRightTapMode]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [UITapMode]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [UIFeedbackMode]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [UICursorMode]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Wisp\Pen\SysEventParameters [FlickHubSetupDone]</pattern>
+          </objectSet>
+        </include>
+        <include>
+          <objectSet>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService [iexplore.exe]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService\596fd73c-fff3-4d3f-81d3-8af2955f3547\Internet Explorer_Server [EnableFlickLearningMode]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService [photoshop.exe]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService\1CAD86A5-8A18-4297-A3FF-5A110325FA12\PSViewC [DisableFlickGestureDetection]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService [Freehand MX.exe]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService\21A8443D-F741-4d5d-954D-5FE60196A5E8\MDocument [DisableFlickGestureDetection]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService [AliasSketchbookPro.exe]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService\E5129A69-FF3A-4129-AE69-9C2E280AAA4B\com.alias.TPWin32SketchView [DisableFlickGestureDetection]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService [ExprGD.exe]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService\30988F51-D107-4f3b-97A8-60953D29EA39\xpUnicodeWindow [DisableFlickGestureDetection]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService [Illustrator.exe]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService\9A979A3F-92BB-49e9-8F2E-4EB423A9BFC9\Static [DisableFlickGestureDetection]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService [powerpnt.exe]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService\1EC353D2-7EE4-4cbe-A63A-4BFE68DBC65A\paneClassDC [DisableFlicksSmoothScrolling]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService [visio.exe]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService\36D1B905-CC62-4ab0-9C08-118B66D6DB90\ListBox [DisableFlickFallbackKeys]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService\36D1B905-CC62-4ab0-9C08-118B66D6DB90\VISIOD [DisableFlickFallbackKeys]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService\36D1B905-CC62-4ab0-9C08-118B66D6DB90\VISIOG [DisableFlickFallbackKeys]</pattern>
+            <pattern type="Registry">HKLM\Software\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\PenService [*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+    <supportedComponents>
+      <supportedComponent>
+        <supportedComponentIdentity
+            language="*"
+            name="Microsoft-Windows-TabletPC-UIHub"
+            processorArchitecture="*"
+            settingsVersionRange="0"
+            />
+        <migXml xmlns="">
+          <rules context="User">
+            <merge script="MigXmlHelper.SourcePriority()">
+              <objectSet>
+                <pattern type="File">%windir% [Microsoft-Windows-TabletPC-UIHub.dat]</pattern>
+              </objectSet>
+            </merge>
+          </rules>
+        </migXml>
+      </supportedComponent>
+    </supportedComponents>
+    <migrationDisplayID>Tablet_PC_Settings\Tablet_PC_General_Options</migrationDisplayID>
+  </migration>
+</assembly>

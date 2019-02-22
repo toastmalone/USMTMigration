@@ -1,0 +1,60 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors=""
+    buildFilter=""
+    company="Microsoft Corporation"
+    copyright=""
+    description="$(resourceString.description)"
+    displayName="$(resourceString.displayName)"
+    manifestVersion="1.0"
+    owners=""
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      buildType="release"
+      language="neutral"
+      name="Microsoft-Windows-ADFS-WebAgentClaims-DL"
+      processorArchitecture="*"
+      publicKeyToken=""
+      version="0.0.0.0"
+      versionScope="nonSxS"
+      />
+  <migration scope="Upgrade,MigWiz">
+    <migrationDisplayID>Active_Directory_Federation_Services</migrationDisplayID>
+    <!--Declare for which Longhorn equivalent OC this manifest corresponds too-->
+    <registerSDF name="ADFS-WebAgentClaims"/>
+    <migXml xmlns="">
+      <detects>
+        <detect>
+          <!--Check if the source version is Server 2003-->
+          <condition>MigXmlHelper.DoesOSMatch("NT", "5.2.*")</condition>
+        </detect>
+        <detect>
+          <condition>MigXmlHelper.DoesStringContentEqual("Registry", "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\OC Manager\Subcomponents [adfsclaims]", "0x00000001")</condition>
+        </detect>
+      </detects>
+    </migXml>
+  </migration>
+  <localization>
+    <resources culture="en-US">
+      <stringTable>
+        <string
+            buildFilter=""
+            id="displayName"
+            value="ADFS Web agent for claims-aware applications"
+            />
+      </stringTable>
+      <stringTable>
+        <string
+            buildFilter=""
+            id="description"
+            value="Installs Web agent for claims-aware applications"
+            />
+      </stringTable>
+    </resources>
+  </localization>
+</assembly>

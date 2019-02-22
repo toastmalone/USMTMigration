@@ -1,0 +1,57 @@
+﻿<?xml version='1.0' encoding='utf-8' standalone='yes'?>
+<assembly
+    xmlns="urn:schemas-microsoft-com:asm.v3"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    authors="diaaf"
+    buildFilter=""
+    company="Microsoft Corporation"
+    copyright=""
+    creationTimeStamp="2003-08-27T17:28:26.8910210-07:00"
+    description=""
+    displayName=""
+    lastUpdateTimeStamp="2005-06-14T21:48:13.0113221-07:00"
+    manifestVersion="1.0"
+    owners="diaaf"
+    supportInformation=""
+    testers=""
+    >
+  <assemblyIdentity
+      language="neutral"
+      name="Microsoft-Windows-Application-Experience-Infrastructure-DL"
+      processorArchitecture="*"
+      publicKeyToken="$(Build.WindowsPublicKeyToken)"
+      version="0.0.0.0"
+      />
+  <migration>
+    <migXml xmlns="">
+      <!-- Only take and execute on XP ONLY!!! -->
+      <detects>
+        <detect>
+          <condition>MigXmlHelper.DoesOSMatch("NT","5.1.*")</condition>
+        </detect>
+      </detects>
+      <rules context="System">
+        <include>
+          <objectSet>
+            <!-- migrate "Custom SDBs" -->
+            <pattern type="File">%windir%\AppPatch\Custom\*[*]</pattern>
+            <!-- migrate the following "HKLM AppCompatFlags" registry key(s) -->
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\InstalledSDB\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers\*[*]</pattern>
+            <pattern type="Registry">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\NoExecuteState\*[*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+      <rules context="User">
+        <include>
+          <objectSet>
+            <!-- migrate the following "HKCU AppCompatFlags" registry key(s) -->
+            <pattern type="Registry">HKCU\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Layers\*[*]</pattern>
+          </objectSet>
+        </include>
+      </rules>
+    </migXml>
+  </migration>
+</assembly>
