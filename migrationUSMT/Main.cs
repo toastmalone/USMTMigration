@@ -154,9 +154,18 @@ namespace migrationUSMT
         {
             string tmp = Properties.Settings.Default.DriveChar;
             Debug.WriteLine("Im closing");
-            for(int i = 0; i < tmp.Length; i++  )
+            Process cmd = new Process();
+            for (int i = 0; i < tmp.Length; i++  )
             {
-                NetUseDelete(tmp[i]);
+                string directory = String.Format(@"use {0}: /delete", tmp[i]);
+                
+                cmd = new Process();
+                cmd.StartInfo.CreateNoWindow = true;
+                cmd.StartInfo.FileName = "net.exe";
+                cmd.StartInfo.Arguments = directory;
+                cmd.StartInfo.UseShellExecute = false;
+                cmd.Start();
+                cmd.WaitForExit();
             }
             
             Application.Exit();

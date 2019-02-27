@@ -1,5 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using migrationUSMT;
+using migrationUSMT.Properties;
 using System.Diagnostics;
 using System.IO;
 namespace migrationUSMTTest
@@ -34,7 +35,7 @@ namespace migrationUSMTTest
             cmd.StartInfo.UseShellExecute = false;
             cmd.StartInfo.RedirectStandardOutput = true;
             cmd.Start();
-
+            
             StreamReader reader = cmd.StandardOutput;
             string output = reader.ReadToEnd();
 
@@ -42,7 +43,7 @@ namespace migrationUSMTTest
             driveLetter = output[6];
 
             var main = new Main();
-
+            
             main.NetUseDelete(driveLetter);
 
           
