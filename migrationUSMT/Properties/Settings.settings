@@ -5,5 +5,11 @@
     <Setting Name="MigFiles" Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="DriveChar" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="DriveAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)">\\dr-storage.tmccadmn.tmcc.edu\images,\\dr-main.tmccadmn.tmcc.edu\sam$,null</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

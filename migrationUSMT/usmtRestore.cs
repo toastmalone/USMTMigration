@@ -83,6 +83,7 @@ namespace migrationUSMT
                 if (result.IsCompleted == true)
                 {
                     richTextBox1.Text = File.ReadAllText(path);
+                    migrate.Show();
                 }
             }
             

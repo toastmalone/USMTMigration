@@ -31,5 +31,29 @@ namespace migrationUSMT.Properties {
                 return ((string)(this["MigFiles"]));
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string DriveChar {
+            get {
+                return ((string)(this["DriveChar"]));
+            }
+            set {
+                this["DriveChar"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("\\\\dr-storage.tmccadmn.tmcc.edu\\images,\\\\dr-main.tmccadmn.tmcc.edu\\sam$,null")]
+        public string DriveAddress {
+            get {
+                return ((string)(this["DriveAddress"]));
+            }
+            set {
+                this["DriveAddress"] = value;
+            }
+        }
     }
 }

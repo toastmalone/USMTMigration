@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "migrationUSMT", "migrationUSMT\migrationUSMT.csproj", "{60DC74E7-2389-4706-9B2D-D37ED5E227F7}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "migrationUSMTTest", "migrationUSMTTest\migrationUSMTTest.csproj", "{BB7F0773-D508-4AEF-A83E-A407E9DEF13F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{60DC74E7-2389-4706-9B2D-D37ED5E227F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60DC74E7-2389-4706-9B2D-D37ED5E227F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60DC74E7-2389-4706-9B2D-D37ED5E227F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB7F0773-D508-4AEF-A83E-A407E9DEF13F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB7F0773-D508-4AEF-A83E-A407E9DEF13F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB7F0773-D508-4AEF-A83E-A407E9DEF13F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB7F0773-D508-4AEF-A83E-A407E9DEF13F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

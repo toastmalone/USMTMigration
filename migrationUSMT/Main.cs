@@ -14,10 +14,12 @@ namespace migrationUSMT
 {
     public partial class Main : Form
     {
+        const int NUMDRIVES = 3;
+
         private string _username;
         private string _password;
-        private string[] _directory = { @"\\dr-main.tmccadmn.tmcc.edu\sam$", @"\\dr-storage.tmccadmn.tmcc.edu\images" };
-        public char[] _letter = { 'q', 'w' };
+        private string[] _directory = Properties.Settings.Default.DriveAddress.Split(',');
+
 
         public Main()
         {
@@ -38,21 +40,29 @@ namespace migrationUSMT
         private void buttonLogin_Click(object sender, EventArgs e)
         {
             
-         _username = userName.Text;
-         _password = password.Text;
+             _username = userName.Text;
+             _password = password.Text;
 
-            int[] exitCodes = new int[_letter.Length];
-            int tmp = 0;
+            int[] exitCodes = new int[NUMDRIVES];
+            char tmp;
             string errors = "";
             bool failed = false;
-            for (int i = 0; i < _letter.Length; i++)
+            
+            
+            for (int i = 0; i < NUMDRIVES; i++)
             {
-                tmp = NetUseAdd(_letter[i], _directory[i], _username, _password);
-                if (tmp != 0)
+                if (_directory[i] != "null")
                 {
-                    errors = String.Concat(errors, _directory[i] + "\n ");
-                    NetUseDelete(_letter[i]);
-                    failed = true;
+                    tmp = NetUseAdd(_directory[i], _username, _password);
+                    if (tmp == '!')
+                    {
+                        errors = String.Concat(errors, _directory[i] + "\n ");
+                        failed = true;
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.DriveChar = String.Concat(Properties.Settings.Default.DriveChar, tmp.ToString());
+                    }
                 }
             }
 
@@ -93,23 +103,41 @@ namespace migrationUSMT
         }
 
         //maps a network drive to the computer on the tmccadmn domain
-        public int NetUseAdd(char letter, string path, string user, string pass)
+        public char NetUseAdd(string path, string user, string pass)
         {
-            string directoryWithAuth = String.Format(@"use {0}: {1} /user:tmccadmn.tmcc.edu\{2} {3}", letter, path, user, pass);
-            Process cmd = new Process();
-            cmd.StartInfo.CreateNoWindow = true;
-            cmd.StartInfo.FileName = "net.exe";
-            cmd.StartInfo.Arguments = directoryWithAuth;
-            cmd.StartInfo.UseShellExecute = false;
-            cmd.Start();
-            cmd.WaitForExit();
-            return cmd.ExitCode;
+            using (Process cmd = new Process())
+            {
+                string directoryWithAuth = String.Format(@"use * {0} /user:tmccadmn.tmcc.edu\{1} {2}", path, user, pass);
+                cmd.StartInfo.CreateNoWindow = true;
+                cmd.StartInfo.FileName = "net.exe";
+                cmd.StartInfo.Arguments = directoryWithAuth;
+                cmd.StartInfo.UseShellExecute = false;
+                cmd.StartInfo.RedirectStandardOutput = true;
+                cmd.Start();
+
+                StreamReader reader = cmd.StandardOutput;
+                string output = reader.ReadToEnd();
+
+                if (output.Contains("Drive "))
+                {
+                    cmd.WaitForExit();
+                    return output[6];
+                }
+                else
+                {
+                    cmd.WaitForExit();
+                    return '!';
+                }
+                
+               
+            }
 
         }
         
         //removes a mapped network drive given the drive letter
-        public static void NetUseDelete(char letter)
+        public void NetUseDelete(char letter)
         {
+            
             string directory = String.Format(@"use {0}: /delete", letter);
             Process cmd = new Process();
             cmd = new Process();
@@ -122,19 +150,23 @@ namespace migrationUSMT
         }
 
         //close event handler to remove all mapped drives
-        //TO DO remove only the networks that were added
         public static void Form_Closing(object sender, FormClosingEventArgs e)
         {
+            string tmp = Properties.Settings.Default.DriveChar;
             Debug.WriteLine("Im closing");
-            Process cmd = new Process();
-            cmd.StartInfo.CreateNoWindow = true;
-            cmd.StartInfo.FileName = "net.exe";
-            cmd.StartInfo.Arguments = @"use * /delete /y";
-            cmd.StartInfo.UseShellExecute = false;
-            cmd.Start();
-            cmd.WaitForExit();
-
+            for(int i = 0; i < tmp.Length; i++  )
+            {
+                NetUseDelete(tmp[i]);
+            }
+            
             Application.Exit();
+        }
+
+
+        //testing functions
+        public void closeForm()
+        {
+            this.Close();
         }
     }
 
