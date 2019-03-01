@@ -14,6 +14,7 @@ namespace migrationUSMT
 {
     public partial class Main : Form
     {
+        //max number of drives this program can map
         const int NUMDRIVES = 3;
 
         private string _username;
@@ -24,6 +25,7 @@ namespace migrationUSMT
         public Main()
         {
             InitializeComponent();
+
             this.FormClosing += Form_Closing;
         }
 
@@ -54,7 +56,7 @@ namespace migrationUSMT
                 if (_directory[i] != "null")
                 {
                     tmp = NetUseAdd(_directory[i], _username, _password);
-                    if (tmp == '!')
+                    if (tmp == '1')
                     {
                         errors = String.Concat(errors, _directory[i] + "\n ");
                         failed = true;
@@ -118,6 +120,7 @@ namespace migrationUSMT
                 StreamReader reader = cmd.StandardOutput;
                 string output = reader.ReadToEnd();
 
+                //checks that the drive was mapped and grabs the drive letter
                 if (output.Contains("Drive "))
                 {
                     cmd.WaitForExit();
@@ -126,7 +129,7 @@ namespace migrationUSMT
                 else
                 {
                     cmd.WaitForExit();
-                    return '!';
+                    return '1';
                 }
                 
                
@@ -169,13 +172,6 @@ namespace migrationUSMT
             }
             
             Application.Exit();
-        }
-
-
-        //testing functions
-        public void closeForm()
-        {
-            this.Close();
         }
     }
 
