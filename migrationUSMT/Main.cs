@@ -58,13 +58,11 @@ namespace migrationUSMT
                     tmp = NetUseAdd(_directory[i], _username, _password);
                     if (tmp == '1')
                     {
+                        //build error log
                         errors = String.Concat(errors, _directory[i] + "\n ");
                         failed = true;
                     }
-                    else
-                    {
-                        Properties.Settings.Default.DriveChar = String.Concat(Properties.Settings.Default.DriveChar, tmp.ToString());
-                    }
+                    
                 }
             }
 
@@ -109,7 +107,15 @@ namespace migrationUSMT
         {
             using (Process cmd = new Process())
             {
-                string directoryWithAuth = String.Format(@"use * {0} /user:tmccadmn.tmcc.edu\{1} {2}", path, user, pass);
+                string directoryWithAuth;
+                if (user == null && pass == null)
+                {
+                    directoryWithAuth = String.Format(@"use * {0} ", path);
+                }
+                else
+                {
+                    directoryWithAuth = String.Format(@"use * {0} /user:tmccadmn.tmcc.edu\{1} {2}", path, user, pass);
+                }
                 cmd.StartInfo.CreateNoWindow = true;
                 cmd.StartInfo.FileName = "net.exe";
                 cmd.StartInfo.Arguments = directoryWithAuth;
@@ -124,15 +130,21 @@ namespace migrationUSMT
                 if (output.Contains("Drive "))
                 {
                     cmd.WaitForExit();
+
+                    //stores drive letter in user settings
+                    Properties.Settings.Default.DriveChar = String.Concat(Properties.Settings.Default.DriveChar, output[6].ToString());
+
+                    // returns the drive letter mapped
                     return output[6];
                 }
                 else
                 {
                     cmd.WaitForExit();
+
+                    //failed to map drive returns 1
                     return '1';
                 }
-                
-               
+
             }
 
         }
